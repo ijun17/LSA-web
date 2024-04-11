@@ -1,4 +1,4 @@
-class PageJoinMobile extends WebPage{
+class MobileJoinPage extends WebPage{
     constructor(){
         super()
     }
@@ -40,7 +40,7 @@ class PageJoinMobile extends WebPage{
         })
 
         this.addEvent(".mobile-login-button","click",()=>{
-            manager.setPage("mobile-info")
+            manager.setPage("mobile-join-complete")
         })
         return this.container;
     }

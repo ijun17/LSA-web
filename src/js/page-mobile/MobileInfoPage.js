@@ -1,4 +1,4 @@
-class PageInfoMobile extends WebPage{
+class MobileInfoPage extends WebPage{
     constructor(){
         super()
     }
@@ -48,7 +48,7 @@ class PageInfoMobile extends WebPage{
             }
         }
 
-        this.addEvent("#info51","click",()=>{data[4]="1"})
+        this.addEvent("#info51","click",()=>{data[4]="1";})
         this.addEvent("#info52","click",()=>{data[4]="2"})
         this.addEvent("#info51","click",checkEmpty)
         this.addEvent("#info52","click",checkEmpty)
@@ -59,6 +59,10 @@ class PageInfoMobile extends WebPage{
                 checkEmpty()
             })
         }
+
+        this.addEvent(".mobile-login-button", "click", ()=>{
+            manager.setPage("mobile-info-complete", {name:this.get("#info1").value})
+        })
 
         return this.container;
     }

@@ -1,4 +1,4 @@
-class PageLoginMobile extends WebPage{
+class MobileLoginPage extends WebPage{
     constructor(){
         super()
     }
@@ -13,7 +13,9 @@ class PageLoginMobile extends WebPage{
             <button class="mobile-join-button">회원가입</button>
         </div>
         `);
-        // this.addEvent(".mobile-email-input",)
+        this.addEvent(".mobile-login-button","click",()=>{
+            manager.setPage("mobile-info")
+        })
         this.addEvent(".mobile-join-button","click",()=>{
             manager.setPage("mobile-join")
         })

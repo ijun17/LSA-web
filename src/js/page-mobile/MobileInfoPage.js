@@ -6,8 +6,7 @@ class MobileInfoPage extends WebPage{
         this.setInnerHTML(`
         <p class="mobile-login-text" style="margin-top:115px;margin-bottom:17px;">축하합니다! 🎉</p>
         <p class="mobile-info-input-text" style="margin-bottom:50px;">
-        회원가입이 완료되었어요.<br>
-        이제 <span style="color:var(--main-color);">인적사항</span>을 입력해볼까요?
+        안전한 연구를 위해 필요한<br>이제 <span style="color:var(--main-color);">인적사항</span>을 입력해볼까요?
         </p>
         ${
             this.infoInputComponent(1,"이름","은","을")+

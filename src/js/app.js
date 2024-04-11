@@ -10,7 +10,7 @@ webPageManager.addPage("mobile-info-complete",new MobileInfoCompletePage())
 function isLogin(){return false;}
 function isMobile(){return true;}
 function init(){
-    webPageManager.setPage("mobile-join-complete")
+    webPageManager.setPage("mobile-login")
 }
 
 init();

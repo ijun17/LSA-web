@@ -11,15 +11,23 @@
     margin:0;
     padding: 0;
     box-sizing:border-box;
+    color:var(--text-color);
 }
 
-.text-center{
-    text-align: center;
+body{
+    background-color: var(--background-color);
 }
 
-.display-none{
-    display: none;
-}
+
+/* 자주 쓰이는 */
+.text-center{text-align: center;}
+.display-none{display: none;}
+.hidden{visibility: hidden;}
+.flex-center{display: flex;  
+    flex-direction :column;
+    justify-content: center;
+    align-items:center;
+    width:100%;}
 
 
 @font-face {

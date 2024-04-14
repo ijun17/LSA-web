@@ -1,0 +1,25 @@
+/* 화면 너비가 700px 이상인 경우에만 적용되는 스타일 */
+@media screen and (min-width: 700px) {
+    .mobile-top-bar{
+        height:120px; 
+        
+        display: flex;
+        
+        align-items: center;
+        
+        justify-content: center;
+    }
+
+    .mobile-top-bar>div{
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: space-between;
+        max-width:700px;
+        width:100%;
+    }
+
+    .mobile-greeting{
+        margin-top: 200px;
+    }
+}

@@ -1,16 +1,13 @@
 /* 화면 너비가 700px 이상인 경우에만 적용되는 스타일 */
 @media screen and (min-width: 700px) {
-    .mobile-top-bar{
+    #main-page .top-bar{
         height:120px; 
-        
         display: flex;
-        
         align-items: center;
-        
         justify-content: center;
     }
 
-    .mobile-top-bar>div{
+    #main-page .top-bar>div{
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
@@ -19,7 +16,19 @@
         width:100%;
     }
 
-    .mobile-greeting{
+    #main-page .greeting{
         margin-top: 200px;
+    }
+
+    #manage-lab-page .top-bar{
+        height:120px; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #manage-lab-page .top-bar>div{
+        max-width:700px;
+        margin-top:0;
     }
 }

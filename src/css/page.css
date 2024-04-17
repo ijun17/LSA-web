@@ -1,186 +1,412 @@
+.wrapper{
+    max-width:700px;
+    width:100%;
+}
 
-/* 탑 바 */
+.overlay{
+    background-color: #0004;
+    position: absolute;
+    width:100vw;
+    height:100vh;
+    z-index: 1;
+}
 
-.top-bar{
-    height:7vw;
-    min-height:70px;
-    /* height:10vw; */
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.main-button{
+    width: 89.3%;
+    height:65px;
+    border-radius: 18px;
+    border:none;
+    background-color: var(--main-color);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-    /* align-items: center; */
+    color:#F1F5FF;
+    font-size: 20px;
+    margin:12.5px;
 }
 
-.top-bar-left-wrapper{
-    height:100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    margin-left:3vw;
+.main-input{
+    width: 87.2%;
+    height:64px;
+    border-radius: 18px;
+    border:solid var(--border-color) 1.2px;
+    margin:7.5px 0;
+    padding-left: 20px;
+    font-size: 18.5px;
+    color:var(--text-color);
 }
 
-.top-bar-lsa-wrapper{
-    height:100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    margin-right:4vw;
+.main-input::placeholder{
+    color: #BFBFBF;
 }
 
 .back-button{
-    height: 45%;
+    width:25px;
+    height:25px;
+    margin-top:60px;
+    margin-left:33px;
     background-color: unset;
     border:none;
 }
 
-.top-bar-lsa-text{
-    height: 30%;
-}
-
-
-
-
-
-
-
-
-
-/* 자주 쓰이는 */
-
-.page-name{
-    font-size:36px;
-    font-weight:bold;
-    color: var(--text-color);
-    margin-top:5vh;
-}
-
-.input-name{
-    font-size:24px;
-    color: var(--text-color);
-    text-align: left;
-}
-
-.warning-text{
-    font-size:14px;
-    color:var(--warning-color);
-    text-align: right;
-}
-
-.input-wrapper{
-    max-width: 500px;
-    width:90vw;
-    margin:10px;
-}
-
-.input{
-    max-width: 500px;
-    width:90vw;
-    max-height: 72px;
-    height: 7vh;
-    padding-left: 20px;
-    background-color: var(--background-color);
-    border: solid var(--border-color) 1px;
-    border-radius: 20px;
-    font-size:22px;
-    margin:10px 0;
-}
-
-.input::placeholder {
-    color: #BFBFBF;
-}
-
-:is(.big-button, .middle-button, .small-button){
-    border-radius: 80px;
-    border:none;
-    background-color: var(--main-color);
-    color:#F1F5FF;
-    padding: 20px;
-}
-
-.big-button{
-    max-width: 40vw;
-    height:80px;
-    font-size: 30px;
-}
-
-.middle-button{
-    max-width: 40vw;
-    height:80px;
-    font-size: 30px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* main */
-
-.lsa-full-text{
-    width:30vw;
-    min-width: 360px;
-    margin:20px;
-}
-
-.lsa-logo{
-    width:360px;
-    max-width: 90vw;
-    margin-top:20px;
-}
-
-.main-page-text1{
-    font-size:26px;
+.main-text1{
+    margin-top:159px;
+    margin-left:40px;
+    font-size:25px;
     font-weight: bold;
     color:var(--text-color);
 }
 
-.login-button{
-    width: 240px;
-    max-width: 40vw;
-    height:80px;
-    border-radius: 80px;
+.main-text2{
+    margin-left:40px;
+    margin-bottom:15px;
+    font-size:20px;
+    font-weight: bold;
+    color:#595959;
+    line-height: 1.2;
+}
+
+
+.warning-text{
+    font-size:16px;
+    color:var(--warning-color);
+    margin:7px;
+    margin-left:56px;
+}
+
+
+
+
+
+
+
+
+
+/* login-page */
+
+#login-page .login-lsa{
+    margin-top:20px;
+    margin-bottom:78px;
+    margin-left:40px;
+    width:121px;
+}
+
+#login-page .join-button{
     border:none;
-    background-color: var(--main-color);
-    color:#F1F5FF;
-    font-size: 30px;
-    margin:20px;
+    color:var(--text-color);
+    background-color: unset;
+    font-size:17px;
+    margin-top:20px;
 }
 
-.join-button{
-    width: 240px;
-    max-width: 40vw;
-    height:80px;
-    border-radius: 80px;
-    border:solid var(--main-color) 1px;
+
+
+/* join-page */
+
+#join-page .email-auth-button{
+    position: absolute;
+    right: 5.8%;
+    top: 7.5px;
+    bottom: 0;
+    height:64px;
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight:bold;
+    color:#666666;
+    padding:20px;
+    border:solid var(--border-color) 1.2px;
+}
+
+
+
+
+
+
+/* info-page */
+
+#info-page .select-duty-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 54px;
+}
+
+#info-page .select-duty{
+    min-width:182px;
+    width:42%;
+    height:265px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #CFE1FC;
+    padding-top: 36px;
+    font-size:19px;
+    font-weight: bold;
+    color:#515866;
+}
+
+#info-page .info-warning-text{
+    font-size:18px;
+    color:var(--warning-color);
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.5;
+    visibility: hidden;
+}
+
+
+
+
+
+/* main-page */
+
+#main-page .top-bar{
+    position: absolute;
+    width:100%;
+    height:197px; 
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding:33px;
     background-color: var(--background-color);
-    color:var(--main-color);
-    font-size: 30px;
-    margin:20px;
 }
 
+#main-page .select-lab{
+    font-size:18px;
+    font-weight: bold;
+    color:#6B7684;
+    display: flex;
+    align-items: center;
+    margin:20px 0;
+    cursor: pointer;
+}
 
-
-
-/* 로그인 페이지 */
-
-.join-link{
+#main-page .select-lab:hover{
     text-decoration: underline;
 }
 
-.join-link:hover{
-    color:var(--main-color);
+#main-page .lab-name{
+    font-size:18px;
+    color:#6B7684;
+}
+
+#main-page .mini-profile{
+    display: flex;
+    align-items: center;
     cursor: pointer;
+}
+
+#main-page .mini-profile .duty{
+    font-size:15px;
+    font-weight: bold;
+    color:#6B7684;
+
+}
+
+#main-page .mini-profile .name{
+    font-size:18px;
+    color:#3F4956;
+    font-weight: bold;
+}
+
+#main-page .greeting{
+    font-size:23px;
+    font-weight: bold;
+    margin-top: 247px;
+    margin-left: 6%;
+    color:#3F4956;
+}
+
+#main-page .safe-greeting{
+    font-size:20px; 
+    font-weight:bold; 
+    color:#505F74; 
+    margin-top: 11px;
+    margin-left: 6%;
+    margin-bottom: 25px;
+}
+
+#main-page .lab-manage{
+    width:88%;
+    height: 95px;
+    margin-left: 6%;
+    border-radius: 15px;
+    display: flex;
+    background-color: var(--background-color);
+    justify-content: space-between;
+    align-items: center;
+}
+
+#main-page .lab-manage>div{
+    display: flex;
+    align-items: center;
+}
+
+#main-page .main-button-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width:88%;
+    
+    margin-top: 25px;
+    margin-left: 6%;
+}
+
+#main-page .main-button-wrapper>button{
+    width:48%;
+    height:209px;
+    border-radius: 15px;
+    background-color: var(--background-color);
+    border:none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+#main-page .main-button-wrapper>button>div{
+    color:#505F74;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#main-page .bottom-sheet{
+    position: absolute;
+    left:50%;
+    transform: translate(-50%,0);
+    bottom:0;
+    max-width:700px;
+    width:100%;
+    height:0;
+    background-color: #F2F4F6;
+    z-index: 3;
+    border-radius: 25px 25px 0 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    transition: height 0.3s ease;
+}
+
+#main-page .bottom-sheet-up{
+    height:95vh;
+}
+
+#main-page .bottom-sheet>div:first-child{
+    background-color: var(--background-color);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    /* height:171px; */
+    padding:10px 25px 25px 25px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#main-page .bottom-sheet>div:first-child>div:nth-child(3){
+    background-color: #F2F4F6;
+    border-radius: 17px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:51px;
+    margin-top:20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 0 10px;
+}
+
+#main-page .bottom-sheet>div:first-child>div:nth-child(3)>input{
+    border:none;
+    background-color: inherit;
+    width:100%;
+    height:51px;
+    font-size:18px;
+}
+
+#main-page .bottom-sheet>div:first-child>div:nth-child(3)>input:focus{
+    outline: none;
+}
+
+#main-page .lab-list{
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#main-page .lab-list>div{
+    width:100%;
+    height:87px;
+    background-color: var(--background-color);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#main-page .lab-list>div>div{
+    margin: 3px;
+    width:90%;
+}
+
+
+#main-page #user-info-bottom-sheet .user-info{
+    width:100%;
+}
+
+#main-page #user-info-bottom-sheet p{
+    font-size: 18px;
+    color:#6B7684;
+    margin-left:44px;
+    margin-top:24px;
+}
+
+#main-page #user-info-bottom-sheet .main-input{
+    font-size:18px;
+    width:87%;
+    height:59px;
+    border:none;
+}
+
+
+
+
+
+
+
+/* manage-lab-page */
+
+#manage-lab-page .top-bar{
+    position: absolute;
+    width:100%;
+    height:126px; 
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding:33px;
+    background-color: var(--background-color);
+    font-size:22px;
+    font-weight: bold;
+}
+
+#manage-lab-page .top-bar>div{
+    margin-top:30px;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#manage-lab-page .lab-list{
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#manage-lab-page .lab-list>div{
+    width:100%;
+    height:87px;
+    background-color: var(--background-color);
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#manage-lab-page .lab-list>div>div{
+    margin: 3px;
+    width:90%;
 }

@@ -4,40 +4,28 @@ class LoginPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
-        <div class="top-bar">
-            <div class="top-bar-left-wrapper">
-                <button class="back-button">
-                    <image src="src/assets/images/back2.png" style="height:100%;">
-                </button>
+        <div class="flex-center">
+            <div class="wrapper">
+                <p class="main-text1">안전한 연구를 꿈꾸는<br>연구실 보조 매니지먼트 시스템</p>
+                <image class="login-lsa" src="src/assets/images/LSA.png"><br>
+                <div class="text-center">
+                    <input type="email" class="main-input" id="email" placeholder="이메일" required><br>
+                    <input type="password" class="main-input" id="password" placeholder="비밀번호" required><br>
+                    <button class="main-button login-button">로그인</button><br>
+                    <button class="join-button">회원가입</button>
+                </div>
             </div>
-            <div class="top-bar-lsa-wrapper">
-                <image class="top-bar-lsa-text" src="src/assets/images/LSA.png">
-            </div>
-        </div>
-
-        <div class="text-center flex-center">
-            <p class="page-name">로그인</p>
-            <p class="input-name" style="margin-bottom:10vh;">계정이 없으신가요?  <span class="join-link">회원가입</span></p>
-            <div class="input-wrapper">
-                <p class="input-name">이메일</p>
-                <input type="email" class="input" name="email" placeholder="example@lsamail.com" required><br>
-            </div>
-            <div class="input-wrapper">
-                <p class="input-name">비밀번호</p>
-                <input type="password" class="input" name="password" placeholder="영문/숫자 2가지 이상, 8자 이상 32자 이하" required><br>
-                <p class="warning-text">⚠️  등록되지 않은 사용자이거나 이메일 또는 비밀번호가 틀렸습니다.</p>
-            </div>
-            <button class="login-page-login-button" style="margin-top:10vh;font-size:26px;">로그인</button>
         </div>
         `);
-
-        this.addEvent(".join-link","click",()=>{
-            manager.setPage("join")
+        this.addEvent(".login-button","click",async()=>{
+            const email = this.get("#email").value
+            const password = this.get("#password").value
+            const response = await REST.login(email,password);
+            if(response.state==0)manager.setPage("info-page")
+            else alert("로그인이 실패하였습니다.")
         })
-
-
-        this.addEvent(".back-button","click",()=>{
-            manager.setPage("main")
+        this.addEvent(".join-button","click",()=>{
+            manager.setPage("join-page")
         })
         return this.container;
     }

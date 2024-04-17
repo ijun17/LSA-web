@@ -18,6 +18,11 @@ body{
     background-color: var(--background-color);
 }
 
+input::placeholder {
+    color: #BFBFBF;
+}
+
+
 
 /* 자주 쓰이는 */
 .text-center{text-align: center;}
@@ -28,6 +33,12 @@ body{
     justify-content: center;
     align-items:center;
     width:100%;}
+
+.space-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 
 @font-face {

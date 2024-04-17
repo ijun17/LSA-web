@@ -6,6 +6,7 @@ class WebPageManager{
     root;
     pages={};
     
+    
     constructor(root){
         this.root = root;
     }
@@ -29,7 +30,9 @@ class WebPageManager{
             return;
         }
         this.root.innerHTML = "";
-        this.root.appendChild(this.pages[pageName].init(this,param));
+        const page = this.pages[pageName].init(this,param)
+        page.id=pageName;
+        this.root.appendChild(page);
     }
 
     isMobile(){

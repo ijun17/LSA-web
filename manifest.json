@@ -1,0 +1,22 @@
+{
+    "name": "LSA",
+    "short_name": "Lab Safe Assistant",
+    "description": "Lab Safe Assistant",
+    "icons": [
+      {
+        "src": "src/assets/icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "src/assets/icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/index.html",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#4780EF"
+  }

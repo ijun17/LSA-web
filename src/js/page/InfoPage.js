@@ -6,7 +6,7 @@ class InfoPage extends WebPage{
         this.setInnerHTML(`
         <div class="flex-center">
             <div class="wrapper">
-                <p class="main-text1" style="margin-top:115px;margin-bottom:17px;">축하합니다! 🎉</p>
+                <p class="main-text1" style="margin-top:100px;margin-bottom:17px;">축하합니다! 🎉</p>
                 <p class="main-text2" style="margin-bottom:50px;">
                 안전한 연구를 위해 필요한<br>이제 <span style="color:var(--main-color);">인적사항</span>을 입력해볼까요?
                 </p>
@@ -38,6 +38,12 @@ class InfoPage extends WebPage{
         </div>
         `);
 
+        const trueButton = this.get("#true-button")
+        const falseButton = this.get("#false-button")
+        const nameInput = this.get("#info1")
+        const info51 = this.get("#info51")
+        const info52 = this.get("#info52")
+
         const infoID=["#info1","#info2","#info3","#info4"]
         let data=["","","","",""]
         let empty=true;
@@ -51,8 +57,8 @@ class InfoPage extends WebPage{
             }
         }
 
-        this.addEvent("#info51","click",()=>{data[4]="1";})
-        this.addEvent("#info52","click",()=>{data[4]="2"})
+        this.addEvent("#info51","click",()=>{data[4]="1";info52.classList.remove("border");info51.classList.add("border");})
+        this.addEvent("#info52","click",()=>{data[4]="2";info51.classList.remove("border");info52.classList.add("border");})
         this.addEvent("#info51","click",checkEmpty)
         this.addEvent("#info52","click",checkEmpty)
 

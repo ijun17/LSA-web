@@ -17,16 +17,21 @@ class LoginPage extends WebPage{
             </div>
         </div>
         `);
-        this.addEvent(".login-button","click",async()=>{
+        let login = async ()=>{
             const email = this.get("#email").value
             const password = this.get("#password").value
             const response = await REST.login(email,password);
             if(response.state==0)manager.setPage("info-page")
             else alert("로그인이 실패하였습니다.")
-        })
+        }
+        
+        this.addEvent(".login-button","click",login)
+        this.addEvent("#email","keypress",async (e)=>{if(e.keyCode==13)login()})
+        this.addEvent("#password","keypress",async (e)=>{if(e.keyCode==13)login()})
         this.addEvent(".join-button","click",()=>{
             manager.setPage("join-page")
         })
+        
         return this.container;
     }
 }

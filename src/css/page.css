@@ -5,10 +5,17 @@
 
 .overlay{
     background-color: #0004;
-    position: absolute;
+    position: fixed;
     width:100vw;
     height:100vh;
     z-index: 1;
+}
+
+.background{
+    width:100vw;
+    height:100vh;
+    position:fixed;
+    z-index: -1;
 }
 
 .main-button{
@@ -21,6 +28,11 @@
     color:#F1F5FF;
     font-size: 20px;
     margin:12.5px;
+    transition: background-color 0.2s ease;
+}
+
+.main-button:active {
+    background-color: #3B6DDF;
 }
 
 .main-input{
@@ -111,7 +123,8 @@
     font-size: 15px;
     font-weight:bold;
     color:#666666;
-    padding:20px;
+    width:32%;
+    max-width: 140px;
     border:solid var(--border-color) 1.2px;
 }
 
@@ -141,6 +154,10 @@
     color:#515866;
 }
 
+#info-page .border{
+    border:solid var(--main-color) 3px;
+}
+
 #info-page .info-warning-text{
     font-size:18px;
     color:var(--warning-color);
@@ -156,8 +173,12 @@
 
 /* main-page */
 
+#main-page .background{
+    background-color: #F2F4F6;;
+}
+
 #main-page .top-bar{
-    position: absolute;
+    position: fixed;
     width:100%;
     height:197px; 
     border-radius: 0 0 18px 18px;
@@ -174,6 +195,7 @@
     align-items: center;
     margin:20px 0;
     cursor: pointer;
+    width:fit-content;
 }
 
 #main-page .select-lab:hover{
@@ -189,6 +211,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    width:fit-content;
 }
 
 #main-page .mini-profile .duty{
@@ -263,7 +286,7 @@
 }
 
 #main-page .bottom-sheet{
-    position: absolute;
+    position: fixed;
     left:50%;
     transform: translate(-50%,0);
     bottom:0;
@@ -330,17 +353,46 @@
     height:87px;
     background-color: var(--background-color);
     border-radius: 15px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin:14px 0;
 }
 
 #main-page .lab-list>div>div{
     margin: 3px;
     width:90%;
 }
+
+#main-page .lab-list .lab-select-button{
+    background-color: #F2F4F6;
+    color: #505F74;
+    width:46px;
+    height:29px;
+    border:none;
+    border-radius: 30px;
+}
+
+#main-page .lab-list .lab-select-button::before{
+    content:"선택"
+}
+
+#main-page .lab-list .lab-select-button-selected{
+    background-color: var(--main-color);
+    color: #F1F5FF;
+    width:59px;
+    height:29px;
+    border:none;
+    border-radius: 30px;
+}
+
+#main-page .lab-list .lab-select-button-selected::before{
+    content:"선택됨"
+}
+
+
 
 
 #main-page #user-info-bottom-sheet .user-info{
@@ -359,9 +411,18 @@
     width:87%;
     height:59px;
     border:none;
+    color:#6B7684;
 }
 
+#main-page #user-info-bottom-sheet .logout{
+    font-size: 18px;
+    color:#6B7684;
+    font-weight: bold;
+}
 
+#main-page #user-info-bottom-sheet .logout:hover{
+    text-decoration: underline;
+}
 
 
 
@@ -370,7 +431,7 @@
 /* manage-lab-page */
 
 #manage-lab-page .top-bar{
-    position: absolute;
+    position: fixed;
     width:100%;
     height:126px; 
     border-radius: 0 0 18px 18px;
@@ -409,4 +470,53 @@
 #manage-lab-page .lab-list>div>div{
     margin: 3px;
     width:90%;
+}
+
+
+
+
+
+
+
+/* experiment-page */
+#experiment-page .main-text2{
+    padding-left:56px;
+    margin-left:0;
+    margin-top:30px;
+    width:100%;
+}
+
+#experiment-page .list{
+    background-color: #F2F4F6;
+    color: #6B7684;
+    width:87%;
+    border-radius: 30px;
+    padding: 20px;
+    margin-bottom:20px;
+}
+
+#experiment-page .list>div:nth-child(1){
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+}
+
+#experiment-page .list>div:nth-child(1)>div:nth-child(1){
+    font-size:15px;
+    font-weight: 600;
+    color:#6B7684;
+}
+
+#experiment-page .list>div:nth-child(2)>div{
+    background-color: var(--background-color);
+    width:100%;
+    height: 59px;
+    font-size:18px;
+    margin-top:15px;
+    border-radius: 17px;
+    color:#6B7684;
+    padding-left: 20px;
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
 }

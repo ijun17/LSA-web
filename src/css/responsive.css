@@ -1,7 +1,7 @@
 /* 화면 너비가 700px 이상인 경우에만 적용되는 스타일 */
 @media screen and (min-width: 700px) {
     #main-page .top-bar{
-        height:120px; 
+        height:100px; 
         display: flex;
         align-items: center;
         justify-content: center;
@@ -21,7 +21,7 @@
     }
 
     #manage-lab-page .top-bar{
-        height:120px; 
+        height:100px; 
         display: flex;
         align-items: center;
         justify-content: center;

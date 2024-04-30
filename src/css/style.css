@@ -49,6 +49,12 @@ input::placeholder {
 
 @font-face {
     font-family: "AppleSDGothicNeo";
+    font-weight: 600;
+    src: url(../assets/fonts/AppleSDGothicNeoSB.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: "AppleSDGothicNeo";
     font-weight: 700;
     src: url(../assets/fonts/AppleSDGothicNeoB.ttf) format('truetype');
 }

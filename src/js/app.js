@@ -12,6 +12,7 @@ webPageManager.addPage("join-complete-page",new JoinCompletePage())
 webPageManager.addPage("info-complete-page",new InfoCompletePage())
 webPageManager.addPage("main-page",new MainPage())
 webPageManager.addPage("manage-lab-page",new ManageLabPage())
+webPageManager.addPage("experiment-page",new ExperimentPage())
 
 function isLogin(){return false;}
 function isMobile(){return true;}

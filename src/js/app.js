@@ -1,10 +1,6 @@
 const root = document.getElementById("root")
 const webPageManager = new WebPageManager(root)
 
-// webPageManager.addPage("main-page", new MainPage())
-// webPageManager.addPage("login-page", new LoginPage())
-// webPageManager.addPage("join-page", new JoinPage())
-
 webPageManager.addPage("login-page",new LoginPage())
 webPageManager.addPage("join-page",new JoinPage())
 webPageManager.addPage("info-page",new InfoPage())
@@ -17,7 +13,7 @@ webPageManager.addPage("experiment-page",new ExperimentPage())
 function isLogin(){return false;}
 function isMobile(){return true;}
 function init(){
-    webPageManager.setPage("login-page")
+    webPageManager.setPage("manage-lab-page")
 }
 
 init();

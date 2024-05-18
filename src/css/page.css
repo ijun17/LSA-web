@@ -253,6 +253,11 @@
     background-color: var(--background-color);
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+#main-page .lab-manage:active{
+    background-color: #EEE;
 }
 
 #main-page .lab-manage>div{
@@ -276,7 +281,10 @@
     background-color: var(--background-color);
     border:none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
 
+#main-page .main-button-wrapper>button:active{
+    background-color: #EEE;
 }
 
 #main-page .main-button-wrapper>button>div{
@@ -299,11 +307,11 @@
     overflow-y: auto;
     overflow-x: hidden;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
-    transition: height 0.3s ease;
+    transition: height 0.2s ease-in-out 0s;
 }
 
 #main-page .bottom-sheet-up{
-    height:95vh;
+    height:95%;
 }
 
 #main-page .bottom-sheet>div:first-child{

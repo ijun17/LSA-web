@@ -67,9 +67,9 @@
     align-items: center; /* 수직 가운데 정렬 */
 }
 
-.lsa-dropdown .option-list>.option:active{
+/* .lsa-dropdown .option-list>.option:active{
     background-color: #EEE;
-}
+} */
 
 .lsa-dropdown .option-list-fold>.option{
     visibility:hidden;
@@ -96,12 +96,28 @@
 
 
 
+.topbar-component{
+    height: 146px;
+    background-color: none;
+}
 
+.topbar-component>.top-bar{
+    position: fixed;
+    width:100%;
+    height:126px; 
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding:33px;
+    background-color: var(--background-color);
+    font-size:22px;
+    font-weight: bold;
+    z-index: 1;
+}
 
-
-
-
-
-.manage-lab-component body{
-    
+.topbar-component>.top-bar>div{
+    margin-top:30px;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

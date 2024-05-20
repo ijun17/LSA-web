@@ -20,14 +20,18 @@
         margin-top: 200px;
     }
 
-    #manage-lab-page .top-bar{
+    .topbar-component>.top-bar{
         height:100px; 
         display: flex;
         align-items: center;
         justify-content: center;
     }
+    
+    .topbar-component{
+        height:120px;
+    }
 
-    #manage-lab-page .top-bar>div{
+    .topbar-component>.top-bar>div{
         max-width:700px;
         margin-top:0;
     }

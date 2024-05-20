@@ -4,10 +4,9 @@ class ExperimentPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
+        <div id="topbar-component"></div>
         <div class="flex-center">
             <div class="wrapper">
-                <button class="back-button"><image src="src/assets/images/back.png" width=25px></button>
-                <p class="main-text1" style="margin-left:56px;margin-top:10px;margin-bottom:10px;">실습</p>
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
                 <div id="experiment-panel" class="display-none">
@@ -21,6 +20,8 @@ class ExperimentPage extends WebPage{
         const researchDropdownWrapper = this.get("#research-selection-button-list")
         const manualDrobdownWrapper = this.get("#manual-selection-button-list")
         const experimentPanel = this.get("#experiment-panel")
+
+        this.get("#topbar-component").appendChild(topbarComponent("실습하기", "main-page"))
 
         const [researchDropdown, addResearchOption] = dropdownComponent(
             "연구 선택",
@@ -54,8 +55,6 @@ class ExperimentPage extends WebPage{
 
             experimentPanel.classList.remove("display-none")
         }
-        
-        this.addEvent(".back-button", "click", ()=>{webPageManager.setPage("main-page")})
 
         
         return this.container;

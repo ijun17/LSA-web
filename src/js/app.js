@@ -15,7 +15,7 @@ webPageManager.addPage("manage-manual-page",new ManageManualPage())
 function isLogin(){return false;}
 function isMobile(){return true;}
 function init(){
-    webPageManager.setPage("experiment-page")
+    webPageManager.setPage("manage-lab-page")
 }
 
 init();

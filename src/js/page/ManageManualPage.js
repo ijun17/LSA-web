@@ -4,15 +4,15 @@ class ManageManualPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
+        <div id="topbar-component"></div>
         <div class="flex-center">
             <div class="wrapper">
-                <button class="back-button"><image src="src/assets/images/back.png" width=25px></button>
-                <p class="main-text1" style="margin-left:56px;margin-top:10px;margin-bottom:10px;">매뉴얼 설정</p>
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
             </div>
         </div>
         `);
+        this.get("#topbar-component").appendChild(topbarComponent("매뉴얼 설정", "main-page"))
 
         const researchDropdownWrapper = this.get("#research-selection-button-list")
         const manualDrobdownWrapper = this.get("#manual-selection-button-list")
@@ -40,7 +40,7 @@ class ManageManualPage extends WebPage{
 
         let createManualList=(expID)=>{
             const [manualDropdown, addManualOption] = dropdownComponent(
-                "매뉴얼",
+                "매뉴얼 선택",
                 `설정할 <span class="main-color">매뉴얼</span>을 선택하세요.`,
                 `선택한 <span class="main-color">매뉴얼</span>`,
                 true,
@@ -52,8 +52,6 @@ class ManageManualPage extends WebPage{
                 addManualOption(i, manualList[i].name,"",()=>{})
             }
         }
-        
-        this.addEvent(".back-button", "click", ()=>{webPageManager.setPage("main-page")})
 
         
         return this.container;

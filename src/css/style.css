@@ -25,6 +25,7 @@ input::placeholder {
 
 
 /* 자주 쓰이는 */
+.main-color{color:var(--main-color);}
 .text-center{text-align: center;}
 .display-none{display: none;}
 .hidden{visibility: hidden;}

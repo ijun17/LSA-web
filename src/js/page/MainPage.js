@@ -19,8 +19,8 @@ class MainPage extends WebPage{
 
         let selectedLabID;
         let labInfos=[
-            {name:"순태랩", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
-            {name:"철중랩", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
+            {name:"인공지능 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
+            {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
         ];
         let userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"실습자",code:"201911067"}
 
@@ -93,8 +93,9 @@ class MainPage extends WebPage{
         // 연구실 관리 버튼을 눌렀을때
         this.addEvent(".lab-manage","click",()=>{webPageManager.setPage("manage-lab-page")})
 
-
         this.addEvent("#experiment-button","click",()=>{webPageManager.setPage("experiment-page")})
+
+        this.addEvent("#manual-button","click",()=>{webPageManager.setPage("manage-manual-page")})
 
         //로그아웃 버튼을 눌렀을떄
         this.addEvent(".logout","click",logout)

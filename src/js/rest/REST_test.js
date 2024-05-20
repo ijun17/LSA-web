@@ -31,7 +31,7 @@ class REST{
         if(checkCertificationNumber) return {state:0} // 성공
         else return {state:1} // 실패
     }
-    회원가입
+    // 회원가입
     static async join(email,pw){
         return {state:0} //성공
         return {state:1} //실패

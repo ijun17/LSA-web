@@ -1,0 +1,107 @@
+
+.lsa-dropdown .main-text2{
+    padding-left:56px;
+    margin-left:0;
+    margin-top:10px;
+    width:100%;
+}
+
+.lsa-dropdown .dropdown-body{
+    background-color: #F2F4F6;
+    color: #6B7684;
+    width:87%;
+    border-radius: 30px;
+    padding: 20px;
+    margin-bottom:20px;
+}
+
+.lsa-dropdown .dropdown-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+}
+
+.lsa-dropdown .dropdown-description{
+    font-size:15px;
+    font-weight: 600;
+    color:#6B7684;
+}
+.lsa-dropdown .accordion-button{
+    width:15px;
+    height:15px;
+    text-align: center;
+    border: none;
+    background-color: unset;
+    transform: rotate(90deg);
+    transition: transform 0.1s linear;
+}
+
+.lsa-dropdown .accordion-button-open{
+    transform: rotate(-90deg);
+}
+
+.lsa-dropdown .option-list{
+    max-height: 500px;
+    overflow-y:hidden;
+    overflow-x: hidden;
+    /* transition: max-height 0.3s ease-in-out; */
+}
+
+.lsa-dropdown .option-list-fold{
+    max-height:0;
+}
+
+
+
+.lsa-dropdown .option{
+    background-color: var(--background-color);
+    width:100%;
+    height: 59px;
+    font-size:18px;
+    margin-top:15px;
+    border-radius: 17px;
+    color:#6B7684;
+    padding-left: 20px;
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.lsa-dropdown .option-list>.option:active{
+    background-color: #EEE;
+}
+
+.lsa-dropdown .option-list-fold>.option{
+    visibility:hidden;
+}
+
+.lsa-dropdown .selected-option{
+    background-color: var(--main-color);
+    color:#F1F5FF;
+}
+
+.lsa-dropdown .selected-option-description{
+    color:#6B7684;
+    font-size:15px;
+    margin-left:5px;
+    margin-top:15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.manage-lab-component body{
+    
+}

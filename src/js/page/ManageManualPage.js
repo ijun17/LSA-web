@@ -1,4 +1,4 @@
-class ExperimentPage extends WebPage{
+class ManageManualPage extends WebPage{
     constructor(){
         super()
     }
@@ -7,31 +7,26 @@ class ExperimentPage extends WebPage{
         <div class="flex-center">
             <div class="wrapper">
                 <button class="back-button"><image src="src/assets/images/back.png" width=25px></button>
-                <p class="main-text1" style="margin-left:56px;margin-top:10px;margin-bottom:10px;">실습</p>
+                <p class="main-text1" style="margin-left:56px;margin-top:10px;margin-bottom:10px;">매뉴얼 설정</p>
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
-                <div id="experiment-panel" class="display-none">
-                    <p>실습을 위해 카메라를 작동합니다.<br>매뉴얼 안내대로 잘 이행해주세요.</p>
-                    <div><button>다음</button></div>
-                </div>
             </div>
         </div>
         `);
 
         const researchDropdownWrapper = this.get("#research-selection-button-list")
         const manualDrobdownWrapper = this.get("#manual-selection-button-list")
-        const experimentPanel = this.get("#experiment-panel")
 
         const [researchDropdown, addResearchOption] = dropdownComponent(
             "연구 선택",
-            `실습할 <span class="main-color">연구</span>를 선택하세요`,
+            `설정할 <span class="main-color">연구</span>를 선택하세요`,
             `선택한 <span class="main-color">연구</span>`,
-            true,true)
+            true,
+            true)
         researchDropdownWrapper.appendChild(researchDropdown)
         // researchDropdown.querySelector(".selected-option-preview").addEventListener("click",(e)=>{
         //     if(e.target.classList.contains("option")){
         //         manualDrobdownWrapper.innerHTML = ""
-        //         experimentPanel.classList.add("display-none")
         //     }
         // })
 
@@ -44,15 +39,18 @@ class ExperimentPage extends WebPage{
 
 
         let createManualList=(expID)=>{
-            const [manualDropdown, addManualOption] = dropdownComponent("매뉴얼",`선택한 연구는 아래 <span class="main-color">매뉴얼</span> 순서대로 진행합니다.`,"",false,false)
+            const [manualDropdown, addManualOption] = dropdownComponent(
+                "매뉴얼",
+                `설정할 <span class="main-color">매뉴얼</span>을 선택하세요.`,
+                `선택한 <span class="main-color">매뉴얼</span>`,
+                true,
+                true)
             manualDrobdownWrapper.innerHTML = ""
             manualDrobdownWrapper.appendChild(manualDropdown)
             let manualList=[{name:"진공기기"}, {name:"열전도기기"}, {name:"온도계 챔버"}]
             for(let i=0; i<manualList.length; i++){
-                addManualOption(i, manualList[i].name)
+                addManualOption(i, manualList[i].name,"",()=>{})
             }
-
-            experimentPanel.classList.remove("display-none")
         }
         
         this.addEvent(".back-button", "click", ()=>{webPageManager.setPage("main-page")})

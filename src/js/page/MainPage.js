@@ -11,7 +11,7 @@ class MainPage extends WebPage{
         ${this.labBottomSheet()+this.userInfoBottomSheet()+this.topBar()}
         <div class="flex-center">
             <div class="wrapper">
-                <div class="greeting">김순태님, 안녕하세요  🥽</div>
+                <div class="greeting"></div>
                 <div class="safe-greeting">오늘도 <span style="color:var(--main-color)">안전한 연구</span> 되시길 바랍니다.</div>
                 <div>${this.user1Buttons()}</div>
             </div>
@@ -32,7 +32,16 @@ class MainPage extends WebPage{
             {name:"인공지능 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
             {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
         ];
-        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"실습자",code:"201911067"}
+        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"전문연구자",code:"201911067"}
+
+
+        const renderMainPage = (name, duty)=>{
+            this.get(".greeting").innerText = name+"님, 안녕하세요  🥽"
+            this.get(".top-bar").querySelector(".name").innerText = name
+            this.get(".top-bar").querySelector(".duty").innerText = duty
+        }
+
+        renderMainPage(userInfo.name, userInfo.duty);
 
         // 연구실 바텀 시트에 연구실 정보를 생성
         const createLabList=(labInfos)=>{
@@ -58,7 +67,6 @@ class MainPage extends WebPage{
                 if(btn.dataset.id==this.selectedLabID){
                     btn.classList.add("lab-select-button-selected")
                     this.get(".lab-name").innerText=btn.dataset.name;
-                    console.log("asdf")
                 } else {
                     btn.classList.remove("lab-select-button-selected")
                 }

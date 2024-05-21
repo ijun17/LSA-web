@@ -7,13 +7,13 @@ function manageLabComponent(labName,labId,univ,department,location){
         <div class="body">
             <div class="top">
                 <div>
-                    <div><span>${labName}</span><span>${labId}</span></div>
+                    <div><span class="text1">${labName}</span><span class="text4">  ${labId}</span></div>
                     <div>
                         <span class="new-badge"></span>
                         <button class="accordion-button"><image src="src/assets/images/_화살표 아이콘.png" width="15px"/></button>
                     </div>
                 </div>
-                <div>${univ+" | "+department+" | "+location}</div>
+                <div class="text3">${univ+" | "+department+" | "+location}</div>
             </div>
             <div class="folder">
                 <div>소속 실습자<span class="new-badge"></span></div>
@@ -25,8 +25,8 @@ function manageLabComponent(labName,labId,univ,department,location){
     </div>
     `
     const modalComponentWrapper = div.querySelector(".modal-component-wrapper");
-    const [modalComponent, openModal, closeModal] = modalComponent();
-    modalComponentWrapper.appendChild(modalComponent);
+    const [modal, openModal, closeModal] = modalComponent();
+    modalComponentWrapper.appendChild(modal);
     
 
     const accordionButton = div.querySelector(".accordion-button");

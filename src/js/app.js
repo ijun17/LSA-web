@@ -2,6 +2,8 @@ const root = document.getElementById("root")
 const webPageManager = new WebPageManager(root)
 // const REST = new RestInterface()
 
+modalComponent()
+
 webPageManager.addPage("login-page",new LoginPage())
 webPageManager.addPage("join-page",new JoinPage())
 webPageManager.addPage("info-page",new InfoPage())

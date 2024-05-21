@@ -1,8 +1,8 @@
 function manageLabComponent(labName,labId,univ,department,location){
-
     const div = document.createElement("div")
     div.className="manage-lab-component"
     div.innerHTML=`
+    <div class="modal-component-wrapper"></div>
     <div class="flex-center">
         <div class="body">
             <div class="top">
@@ -24,6 +24,11 @@ function manageLabComponent(labName,labId,univ,department,location){
         </div>
     </div>
     `
+    const modalComponentWrapper = div.querySelector(".modal-component-wrapper");
+    const [modalComponent, openModal, closeModal] = modalComponent();
+    modalComponentWrapper.appendChild(modalComponent);
+    
+
     const accordionButton = div.querySelector(".accordion-button");
     const folder = div.querySelector(`.folder`);
     const memberList = div.querySelector(".member-list");
@@ -45,7 +50,11 @@ function manageLabComponent(labName,labId,univ,department,location){
         </div>`
     }
 
-    const addMemberList = (type, univ, department, name, id, onclickdeletebutton=()=>{})=>{
+    const deleteMember = ()=>{
+
+    }
+
+    const addMemberList = (type, univ, department, name, id)=>{
         const list = document.createElement("div");
         list.innerHTML=`
         ${getListInfo(type, univ, department, name, id)}
@@ -53,9 +62,17 @@ function manageLabComponent(labName,labId,univ,department,location){
             <button class="delete-button">삭제</button>
         </div>
         `
-        const deleteButton = list.querySelector(".delete-button");
-        deleteButton.addEventListener("click",onclickdeletebutton(type, univ, department, name, id));
         memberList.appendChild(list);
+        const deleteButton = list.querySelector(".delete-button");
+        deleteButton.addEventListener("click",()=>{
+            openModal(`<p>이 실습자를 삭제하겠습니까</p>`,["취소","삭제"],[
+                ()=>{closeModal()},
+                ()=>{
+                    list.remove();
+                    deleteMember();
+                }]
+            )
+        })
     }
 
     const addWaitList = (type, univ, department, name, id, onclickacceptbutton=()=>{}, onclickdenybutton=()=>{})=>{
@@ -73,7 +90,7 @@ function manageLabComponent(labName,labId,univ,department,location){
             onclickacceptbutton(type, univ, department, name, id)
         });
         denyButton.addEventListener("click",()=>{
-            onclickdenytbutton(type, univ, department, name, id)
+            onclickdenybutton(type, univ, department, name, id)
         })
 
 

@@ -1,13 +1,14 @@
 class MainPage extends WebPage{
-    selectLabID=null;
+    selectedLabID=null;
     constructor(){
         super()
     }
     init(manager){
         this.setInnerHTML(`
-        <div class="overlay display-none"></div>
+        <div class="bottom-sheet-overlay overlay display-none"></div>
         <div class="background"></div>
-        ${this.labErrorModal()+this.labBottomSheet()+this.userInfoBottomSheet()+this.topBar()}
+        <div class="modal-component-wrapper"></div>
+        ${this.labBottomSheet()+this.userInfoBottomSheet()+this.topBar()}
         <div class="flex-center">
             <div class="wrapper">
                 <div class="greeting">김순태님, 안녕하세요  🥽</div>
@@ -17,22 +18,31 @@ class MainPage extends WebPage{
         </div>
         `);
 
-        let selectedLabID;
-        let labInfos=[
+        const modalComponentWrapper = this.get(".modal-component-wrapper");
+        const [modal, openModal, closeModal] = modalComponent();
+        modalComponentWrapper.appendChild(modal);
+        function showErrorModal(){
+            openModal(
+                `<h1>오류</h1><p>연구실에 소속되어 있지 않습니다.</p><p><span class="main-color">연구실 소속</span>을 등록하고,<br> 다시 시도해주세요.</p>`,
+                ["확인", "등록하기"],
+                [()=>{closeModal()},()=>{closeModal();showLabBottomSheet();}])
+        }
+
+        const labInfos=[
             {name:"인공지능 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
             {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
         ];
-        let userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"실습자",code:"201911067"}
+        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"실습자",code:"201911067"}
 
         // 연구실 바텀 시트에 연구실 정보를 생성
-        let createLabList=(labInfos)=>{
+        const createLabList=(labInfos)=>{
             let innerHTML="";
             for(let i=0; i<labInfos.length; i++)innerHTML+=this.createLabInfo(labInfos[i]);
             this.get(".lab-list").innerHTML=innerHTML;
         }
 
         //유저 정보 바텀 시트에 유저 정보를 생성
-        let createUserInfo = (userInfo)=>{
+        const createUserInfo = (userInfo)=>{
             this.get("#user-info1").value = userInfo.name
             this.get("#user-info2").value = userInfo.univ
             this.get("#user-info3").value = userInfo.major
@@ -41,61 +51,55 @@ class MainPage extends WebPage{
         }
 
         //연구실 선택
-        let selectLab=(labID)=>{
-            console.log(labID)
-            selectedLabID = labID;
+        const selectLab=(labID)=>{
+            this.selectedLabID = labID;
             const buttons = this.get(".lab-list").querySelectorAll(".lab-select-button")
             for(let btn of buttons){
-                if(btn.dataset.id==selectedLabID){
+                if(btn.dataset.id==this.selectedLabID){
                     btn.classList.add("lab-select-button-selected")
                     this.get(".lab-name").innerText=btn.dataset.name;
+                    console.log("asdf")
                 } else {
                     btn.classList.remove("lab-select-button-selected")
                 }
             }
         }
+        createLabList(labInfos)
+        selectLab(this.selectedLabID)
 
-        let logout=()=>{
+        const logout=()=>{
             webPageManager.setPage("login-page")
         }
 
-        // 랩 선택을 눌렀을때
-        this.addEvent(".lab-list","click",(e)=>{
-            const target = e.target
-            if(target.classList.contains("lab-select-button")){
-                selectLab(target.dataset.id);
-            }
-        })
-
-
-        // 프로필을 눌렀을때 이벤트
-        this.addEvent(".mini-profile","click",()=>{
-            this.get(".overlay").classList.remove("display-none");
-            this.get("#user-info-bottom-sheet").classList.add("bottom-sheet-up");
-            createUserInfo(userInfo)
-        })
-
-        // 연구실 선택을 눌렀을때 이벤트
-        this.addEvent(".select-lab","click",()=>{
-            this.get(".overlay").classList.remove("display-none");
-            this.get("#lab-bottom-sheet").classList.add("bottom-sheet-up");
-            createLabList(labInfos)
-            selectLab(selectedLabID)
-        })
-        
-        // 연구실 선택 또는 유저 정보 바텀 시트가 떠 있을대 오버레이를 클릭했을때
-        this.addEvent(".overlay","click",()=>{
-            this.get(".overlay").classList.add("display-none");
+        const closeBottomSheet = ()=>{
+            this.get(".bottom-sheet-overlay").classList.add("display-none");
             this.get("#lab-bottom-sheet").classList.remove("bottom-sheet-up");
             this.get("#user-info-bottom-sheet").classList.remove("bottom-sheet-up");
-        })
+        }
 
-        // 연구실 관리 버튼을 눌렀을때
+        const showProfileBottomSheet = ()=>{
+            this.get(".bottom-sheet-overlay").classList.remove("display-none");
+            this.get("#user-info-bottom-sheet").classList.add("bottom-sheet-up");
+            createUserInfo(userInfo)
+        }
+
+        const showLabBottomSheet = ()=>{
+            this.get(".bottom-sheet-overlay").classList.remove("display-none");
+            this.get("#lab-bottom-sheet").classList.add("bottom-sheet-up");
+        }
+
+        // 바텀 시트 이벤트
+        this.addEvent(".mini-profile","click",showProfileBottomSheet)
+        this.addEvent(".select-lab","click",showLabBottomSheet)
+        this.addEvent(".bottom-sheet-overlay","click",closeBottomSheet)
+
+        // 랩 선택을 눌렀을때
+        this.addEvent(".lab-list","click",(e)=>{ if(e.target.classList.contains("lab-select-button"))selectLab(e.target.dataset.id);})
+
+        // 이벤트
         this.addEvent(".lab-manage","click",()=>{webPageManager.setPage("manage-lab-page")})
-
-        this.addEvent("#experiment-button","click",()=>{webPageManager.setPage("experiment-page")})
-
-        this.addEvent("#manual-button","click",()=>{webPageManager.setPage("manage-manual-page")})
+        this.addEvent("#experiment-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("experiment-page")})
+        this.addEvent("#manual-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("manage-manual-page")})
 
         //로그아웃 버튼을 눌렀을떄
         this.addEvent(".logout","click",logout)
@@ -177,19 +181,6 @@ class MainPage extends WebPage{
         </div>`
     }
 
-    // 에러 메시지
-    labErrorModal(){
-        return `
-        <div class="error-modal display-none">
-            <div>오류</div>
-            <div>연구실의 소속되어 있지 않습니다.</div>
-            <div><span style="color:var(--main-color);">연구실 소속</span>을 등록하고,<br>다시 시도해주세요.</div>
-            <div>
-                <button>확인</button>
-                <button>등록하기</button>
-            </div>
-        </div>`
-    }
     // 전문 연구자 버튼 - 연구실 관리, 실습하기, 메뉴얼 설정
     user1Buttons(){
         return `

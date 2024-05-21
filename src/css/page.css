@@ -389,6 +389,7 @@
     height:29px;
     border:none;
     border-radius: 30px;
+    font-size: 14px;
 }
 
 #main-page .lab-list .lab-select-button::before{

@@ -5,7 +5,7 @@ class ManageLabPage extends WebPage{
     init(manager){
         this.setInnerHTML(`
         <div class="overlay display-none"></div>
-
+        <div class="modal-component-wrapper"></div>
         <div id="topbar-component"></div>
         <div class="background"></div>
         <div class="flex-center">
@@ -20,6 +20,16 @@ class ManageLabPage extends WebPage{
 
         this.get("#topbar-component").appendChild(topbarComponent("연구실 관리", "main-page"))
 
+        const modalComponentWrapper = this.get(".modal-component-wrapper");
+        const [modal, openModal, closeModal] = modalComponent();
+        modalComponentWrapper.appendChild(modal);
+        const showDeleteModal=()=>{
+            openModal(`<p>이 실습자를 삭제하겠습니까?</p>`,
+            ["확인", "등록하기"],
+            [()=>{closeModal()},()=>{}])
+        }
+        showDeleteModal()
+        
         return this.container;
     }
 

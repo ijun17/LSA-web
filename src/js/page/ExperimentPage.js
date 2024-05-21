@@ -4,7 +4,7 @@ class ExperimentPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
-        <div id="topbar-component"></div>
+        <div id="topbar-component-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <div id="research-selection-button-list"></div>
@@ -21,7 +21,7 @@ class ExperimentPage extends WebPage{
         const manualDrobdownWrapper = this.get("#manual-selection-button-list")
         const experimentPanel = this.get("#experiment-panel")
 
-        this.get("#topbar-component").appendChild(topbarComponent("실습하기", "main-page"))
+        this.get("#topbar-component-wrapper").appendChild(topbarComponent("실습하기", "main-page"))
 
         const [researchDropdown, addResearchOption] = dropdownComponent(
             "연구 선택",

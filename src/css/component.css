@@ -137,6 +137,8 @@
 
 .modal-component>.overlay{
     position: fixed;
+    top:0;
+    left:0;
     width: 100vw;
     height: 100%;
     background-color: #0004;
@@ -203,21 +205,24 @@
     width:90%;
     background-color: var(--background-color);
     border-radius: 10px;
-    padding:20px;
+    padding:20px 25px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top:15px;
+    margin-bottom:20px;
 }
 
 .manage-lab-component .text1{
     color:#505F74;
     font-size:19px;
     font-weight: bold;
+    margin-right:5px;
+    margin-bottom:30px;
 }
 
 .manage-lab-component .text2{
     color:#3F4956;
     font-size:18px;
     font-weight: bold;
+    margin-right:10px;
 }
 
 .manage-lab-component .text3{
@@ -233,6 +238,7 @@
 
 .manage-lab-component .top>div{
     width:100%;
+    margin-bottom:5px;
 }
 
 .manage-lab-component .top>div:nth-child(1){
@@ -253,4 +259,58 @@
 
 .manage-lab-component .accordion-button-open{
     transform: rotate(-90deg);
+}
+
+.manage-lab-component .folder{
+    max-height:0;
+    overflow-y: auto;
+}
+
+.manage-lab-component .folder-open{
+    max-height:1000px;
+    
+}
+
+.manage-lab-component .folder>h1{
+    margin-top:35px;
+    margin-bottom:20px;
+}
+
+.manage-lab-component .list-body{
+    display: flex;
+    flex-direction: row;
+}
+
+.manage-lab-component .list-body>.list-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.manage-lab-component .list-profile-image{
+    height: 51px;
+    margin-right:15px;
+}
+
+.manage-lab-component .button-part{
+    display: flex;
+    flex-direction: row-reverse;
+    /* margin-top: 5px; */
+    margin-bottom: 20px;
+}
+
+.manage-lab-component .button-part>button{
+    width:46px;
+    height:29px;
+    font-size: 14px;
+    color:#505F74;
+    background-color: #F2F4F6;
+    border-radius: 30px;
+    border:none;
+    margin-left:10px;
+}
+
+.manage-lab-component .button-part>button:hover{
+    color:#F1F5FF;
+    background-color: #4780EF;
 }

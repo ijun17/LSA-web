@@ -12,10 +12,10 @@
     margin:0;
     padding: 0;
     box-sizing:border-box;
-    color:var(--text-color);
 }
 
 body{
+    color:var(--text-color);
     background-color: var(--background-color);
 }
 

@@ -16,9 +16,9 @@ function manageLabComponent(labName,labId,univ,department,location){
                 <div class="text3">${univ+" | "+department+" | "+location}</div>
             </div>
             <div class="folder">
-                <div>소속 실습자<span class="new-badge"></span></div>
+                <h1 class="text1">소속 실습자<span class="new-badge"></span></h1>
                 <div class="member-list"></div>
-                <div>소속 신청 리스트<span class="new-badge"></span></div>
+                <h1 class="text1">소속 신청 리스트<span class="new-badge"></span></h1>
                 <div class="wait-list"></div>
             </div>
         </div>
@@ -35,51 +35,60 @@ function manageLabComponent(labName,labId,univ,department,location){
     const waitList = div.querySelector(".wait-list");
 
     const clickAccordionButton = ()=>{
+        accordionButton.classList.toggle("accordion-button-open")
         folder.classList.toggle("folder-open");
     }
 
-    accordionButton.addEventListener("click",clickAccordionButton)
 
-    const getListInfo=(type, univ, department, name, id)=>{
+    const getUserInfo=(type, univ, department, name, id)=>{
         return `<div class="list-body">
-            <div class="list-profile-image"></div>
+            <div class="list-profile-image"><img src="src/assets/images/사람 아이콘.png" width=51px/></div>
             <div class="list-info">
-                <div>${type+" | "+univ+" | "+department}</div>
-                <div><span>${name}</span><span>${id}</span></div>
+                <div class="text4">${type+" | "+univ+" | "+department}</div>
+                <div><span class="text2">${name}</span><span class="text4">${id}</span></div>
             </div>
         </div>`
     }
 
-    const deleteMember = ()=>{
+    const deleteMember = async ()=>{
+
+    }
+
+    const deleteWait = async ()=>{
+
+    }
+
+    const acceptWait = async ()=>{
 
     }
 
     const addMemberList = (type, univ, department, name, id)=>{
         const list = document.createElement("div");
         list.innerHTML=`
-        ${getListInfo(type, univ, department, name, id)}
-        <div class="button-part>
+        ${getUserInfo(type, univ, department, name, id)}
+        <div class="button-part">
             <button class="delete-button">삭제</button>
         </div>
         `
-        memberList.appendChild(list);
         const deleteButton = list.querySelector(".delete-button");
         deleteButton.addEventListener("click",()=>{
             openModal(`<p>이 실습자를 삭제하겠습니까</p>`,["취소","삭제"],[
                 ()=>{closeModal()},
                 ()=>{
                     list.remove();
+                    closeModal();
                     deleteMember();
                 }]
             )
         })
+        memberList.appendChild(list);
     }
 
-    const addWaitList = (type, univ, department, name, id, onclickacceptbutton=()=>{}, onclickdenybutton=()=>{})=>{
+    const addWaitList = (type, univ, department, name, id)=>{
         const list = document.createElement("div");
         list.innerHTML=`
-        ${getListInfo(type, univ, department, name, id)}
-        <div class="button-part>
+        ${getUserInfo(type, univ, department, name, id)}
+        <div class="button-part">
             <button class="accept-button">수락</button>
             <button class="deny-button">거절</button>
         </div>
@@ -87,13 +96,29 @@ function manageLabComponent(labName,labId,univ,department,location){
         const acceptButton = list.querySelector(".accept-button");
         const denyButton = list.querySelector(".deny-button");
         acceptButton.addEventListener("click",()=>{
-            onclickacceptbutton(type, univ, department, name, id)
+            acceptWait(type, univ, department, name, id)
         });
         denyButton.addEventListener("click",()=>{
-            onclickdenybutton(type, univ, department, name, id)
+            list.remove();
+            deleteWait(type, univ, department, name, id)
         })
 
-
+        waitList.appendChild(list);
     }
+
+
+
+    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"}]
+    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"}]
+    for(let member of testMemberList){
+        addMemberList(member.type, member.univ, member.department, member.name, member.id)
+    }
+
+    for(let member of testWaitList){
+        addWaitList(member.type, member.univ, member.department, member.name, member.id)
+    }
+
+
+    accordionButton.addEventListener("click",clickAccordionButton)
     return [div, addMemberList, addWaitList]
 }

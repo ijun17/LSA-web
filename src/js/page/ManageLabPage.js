@@ -10,7 +10,7 @@ class ManageLabPage extends WebPage{
         <div class="background"></div>
         <div class="flex-center">
             <div class="wrapper">
-                <p style="color:#6B7684; font-size:18px; margin-left:40px;">관리할 연구실을 선택하세요</p>
+                <p style="color:#6B7684; font-size:18px; margin-left:40px;margin-bottom:15px;">관리할 연구실을 선택하세요</p>
                 <div class="manage-lab-component-wrapper"></div>
             </div>
         </div>
@@ -33,6 +33,9 @@ class ManageLabPage extends WebPage{
         const manageLabComponentWrapper = this.get(".manage-lab-component-wrapper");
         const [manageLabComp,addMemberList,addWaitList] = manageLabComponent("인공지능 연구소","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
         manageLabComponentWrapper.appendChild(manageLabComp);
+
+        const [manageLabComp2,addMemberList2,addWaitList2] = manageLabComponent("인공지능 연구소","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
+        manageLabComponentWrapper.appendChild(manageLabComp2);
         
         return this.container;
     }

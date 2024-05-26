@@ -73,6 +73,7 @@ class MainPage extends WebPage{
             }
         }
         createLabList(labInfos)
+        createUserInfo(userInfo)
         selectLab(this.selectedLabID)
 
         const logout=()=>{
@@ -88,7 +89,6 @@ class MainPage extends WebPage{
         const showProfileBottomSheet = ()=>{
             this.get(".bottom-sheet-overlay").classList.remove("display-none");
             this.get("#user-info-bottom-sheet").classList.add("bottom-sheet-up");
-            createUserInfo(userInfo)
         }
 
         const showLabBottomSheet = ()=>{
@@ -121,10 +121,10 @@ class MainPage extends WebPage{
             <div>
                 <div class="select-lab">
                     <div class="lab-name">연구실을 설정해주세요. </div>
-                    <image src="src/assets/images/토글 아이콘.png" width=10px height=6.26px style="margin-left:5px;"> 
+                    <img src="src/assets/images/토글 아이콘.png" width=10px height=6.26px style="margin-left:5px;"/> 
                 </div>
                 <div class="mini-profile">
-                    <image src="src/assets/images/사람 아이콘.png" width=51px style="margin-right:10px;">
+                    <img src="src/assets/images/사람 아이콘.png" width=51px style="margin-right:10px;"/>
                     <div>
                         <div class="duty">전문 연구자</div>
                         <div class="name">김순태</div>
@@ -145,7 +145,7 @@ class MainPage extends WebPage{
                     <div class="hidden" style="color:#6B7684;font-size:18px;font-weight:bold;">편집</div>
                 </div>
                 <div>
-                    <image src="src/assets/images/search.png" width=30px height=30px> 
+                    <img src="src/assets/images/search.png" width=30px height=30px/> 
                     <input placeholder="연구실 검색" id="lab-search">
                 </div>
             </div>
@@ -174,7 +174,7 @@ class MainPage extends WebPage{
             <div>
                 <div style="background-color:#e6e6e6;width:15%;height:6.5px;border-radius:3.2px;margin-bottom:30px;"></div>
                 <div class="space-between" style="width:100%">
-                    <div class="hidden" style="width:70px;"><button style="border:none; background-color:unset;"><image src="src/assets/images/back.png" width=25px></button></div>
+                    <div class="hidden" style="width:70px;"><button style="border:none; background-color:unset;"><img src="src/assets/images/back.png" width=25px/></button></div>
                     <div style="font-size:22px;font-weight:bold; color:#3F4956">사용자 정보 설정</div>
                     <div class="logout" style="width:70px;">로그아웃</div>
                 </div>
@@ -194,17 +194,17 @@ class MainPage extends WebPage{
         return `
             <div class="lab-manage space-between">
                 <div>
-                    <image src="src/assets/images/연구실 아이콘.png" width=90px>
+                    <img src="src/assets/images/연구실 아이콘.png" width=90px/>
                     <div>
                         <div style="font-size:19px; font-weight:bold; color: #505F74"; >연구실 관리</div>
                         <div style="font-size:16px; color: #6B7684"; >새로 들어온 신청</div>
                     </div>
                 </div>
-                <image src="src/assets/images/_화살표 아이콘.png" width=15px height=15px style="margin-right:20px;">
+                <img src="src/assets/images/_화살표 아이콘.png" width=15px height=15px style="margin-right:20px;"/>
             </div>
             <div class="main-button-wrapper">
-                <button id="experiment-button"><image src="src/assets/images/4.png" width=116px><div>실습하기</div></button>
-                <button id="manual-button"><image src="src/assets/images/5.png" width=116px><div>메뉴얼 설정</div></button>
+                <button id="experiment-button"><img src="src/assets/images/4.png" width=116px/><div>실습하기</div></button>
+                <button id="manual-button"><img src="src/assets/images/5.png" width=116px/><div>메뉴얼 설정</div></button>
             </div>
         `
     }

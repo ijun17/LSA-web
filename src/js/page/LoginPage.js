@@ -7,7 +7,7 @@ class LoginPage extends WebPage{
         <div class="flex-center">
             <div class="wrapper">
                 <p class="main-text1">안전한 연구를 꿈꾸는<br>연구실 보조 매니지먼트 시스템</p>
-                <image class="login-lsa" src="src/assets/images/LSA.png"><br>
+                <img class="login-lsa" src="src/assets/images/LSA.png"/><br>
                 <div class="text-center">
                     <input type="email" class="main-input" id="email" placeholder="이메일" required><br>
                     <input type="password" class="main-input" id="password" placeholder="비밀번호" required><br>

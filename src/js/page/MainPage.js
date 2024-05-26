@@ -53,9 +53,9 @@ class MainPage extends WebPage{
         //유저 정보 바텀 시트에 유저 정보를 생성
         const createUserInfo = (userInfo)=>{
             this.get("#user-info1").value = userInfo.name
-            this.get("#user-info2").value = userInfo.univ
-            this.get("#user-info3").value = userInfo.major
-            this.get("#user-info4").value = userInfo.duty
+            this.get("#user-info2").value = userInfo.duty
+            this.get("#user-info3").value = userInfo.univ
+            this.get("#user-info4").value = userInfo.major
             this.get("#user-info5").value = userInfo.code
         }
 

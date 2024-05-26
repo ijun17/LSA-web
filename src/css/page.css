@@ -380,6 +380,8 @@
 #main-page .lab-list>div>div{
     margin: 3px;
     width:90%;
+    white-space:nowrap; 
+    overflow-x: hidden;
 }
 
 #main-page .lab-list .lab-select-button{

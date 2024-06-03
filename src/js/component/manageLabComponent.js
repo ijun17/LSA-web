@@ -16,9 +16,9 @@ function manageLabComponent(labName,labId,univ,department,location){
                 <div class="text3">${univ+" | "+department+" | "+location}</div>
             </div>
             <div class="folder">
-                <h1 class="text1">소속 실습자<span class="new-badge"></span></h1>
+                <h1 class="text1">연구실 멤버<span class="new-badge"></span></h1>
                 <div class="member-list"></div>
-                <h1 class="text1">소속 신청 리스트<span class="new-badge"></span></h1>
+                <h1 class="text1">가입 요청 리스트<span class="new-badge"></span></h1>
                 <div class="wait-list"></div>
             </div>
         </div>
@@ -108,8 +108,8 @@ function manageLabComponent(labName,labId,univ,department,location){
 
 
 
-    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"}]
-    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911067"}]
+    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"}]
+    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"}]
     for(let member of testMemberList){
         addMemberList(member.type, member.univ, member.department, member.name, member.id)
     }

@@ -31,10 +31,10 @@ class ManageLabPage extends WebPage{
 
         //manage lab
         const manageLabComponentWrapper = this.get(".manage-lab-component-wrapper");
-        const [manageLabComp,addMemberList,addWaitList] = manageLabComponent("인공지능 연구소","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
+        const [manageLabComp,addMemberList,addWaitList] = manageLabComponent("전자재료 연구실","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
         manageLabComponentWrapper.appendChild(manageLabComp);
 
-        const [manageLabComp2,addMemberList2,addWaitList2] = manageLabComponent("인공지능 연구소","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
+        const [manageLabComp2,addMemberList2,addWaitList2] = manageLabComponent("운영체제 연구실","ID 073293","전북대학교","소프트웨어공학과","공대 5호관 507호")
         manageLabComponentWrapper.appendChild(manageLabComp2);
         
         return this.container;

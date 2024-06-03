@@ -29,10 +29,10 @@ class MainPage extends WebPage{
         }
 
         const labInfos=[
-            {name:"인공지능 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
+            {name:"전자재료 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
             {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
         ];
-        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"전문연구자",code:"201911067"}
+        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"전문연구자",code:"1234567"}
 
 
         const renderMainPage = (name, duty)=>{

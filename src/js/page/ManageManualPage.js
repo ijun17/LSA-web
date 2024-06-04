@@ -9,8 +9,8 @@ class ManageManualPage extends WebPage{
             <div class="wrapper">
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
-                <div id="manual-panel">
-                    <p>안내 오브젝트를 수정하려면 아래 버튼을 클릭해주세요</p>
+                <div id="manual-panel" class="display-none">
+                    <p>안내 오브젝트를 수정하려면 <br>아래 버튼을 클릭해주세요</p>
                     <div><button id="next-button">설정</button></div>
                 </div>
             </div>
@@ -38,6 +38,7 @@ class ManageManualPage extends WebPage{
         for(let i=0; i<researchList.length; i++){
             addResearchOption(i, researchList[i].name, "이 연구는 디스플레이 신소재에 대해 경도, 환경을 실험해서 안정성을 테스트합니다.", ()=>{
                 createManualList()
+                this.get("#manual-panel").classList.add("display-none")
             })
         }
 
@@ -56,13 +57,13 @@ class ManageManualPage extends WebPage{
             let manualList=[{name:"진공기기"}, {name:"열전도기기"}, {name:"온도계 챔버"}]
             for(let i=0; i<manualList.length; i++){
                 addManualOption(i, manualList[i].name,"",()=>{
-                    this.get("manual-panel").classList.remove("display-none")
+                    this.get("#manual-panel").classList.remove("display-none")
                 })
             }
         }
 
         this.addEvent("#next-button","click",()=>{
-            window.location.href = "uniwebview://host?param1=value1&param2=value2"
+            window.location.href = "uniwebview://onAREditmanual?id=1"
         })
 
         

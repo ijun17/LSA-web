@@ -40,19 +40,26 @@ class ExperimentPage extends WebPage{
         for(let i=0; i<researchList.length; i++){
             addResearchOption(i, researchList[i].name, "이 연구는 디스플레이 신소재에 대해 경도, 환경을 실험해서 안정성을 테스트합니다.", ()=>{
                 createManualList()
+                experimentPanel.classList.add("display-none")
             })
         }
 
 
         let createManualList=(expID)=>{
-            const [manualDropdown, addManualOption] = dropdownComponent("매뉴얼",`선택한 연구는 아래 <span class="main-color">매뉴얼</span> 순서대로 진행합니다.`,"",false,false)
+            const [manualDropdown, addManualOption] = dropdownComponent(
+                "매뉴얼",`선택한 연구는 아래 <span class="main-color">매뉴얼</span> 순서대로 진행합니다.`,
+                `선택한 <span class="main-color">매뉴얼</span>`,true,true)
             manualDrobdownWrapper.innerHTML = ""
             manualDrobdownWrapper.appendChild(manualDropdown)
             let manualList=[{name:"진공기기"}, {name:"열전도기기"}, {name:"온도계 챔버"}]
             for(let i=0; i<manualList.length; i++){
-                addManualOption(i, manualList[i].name)
+                addManualOption(i, manualList[i].name,"",()=>{
+                    selectManual()
+                })
             }
+        }
 
+        let selectManual = ()=>{
             experimentPanel.classList.remove("display-none")
         }
 

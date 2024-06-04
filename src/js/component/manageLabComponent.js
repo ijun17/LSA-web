@@ -108,8 +108,8 @@ function manageLabComponent(labName,labId,univ,department,location){
 
 
 
-    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"}]
-    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"1234567"}]
+    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911023"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김규호", id:"201923478"}]
+    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"최태운", id:"201912762"}]
     for(let member of testMemberList){
         addMemberList(member.type, member.univ, member.department, member.name, member.id)
     }

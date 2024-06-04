@@ -1,8 +1,8 @@
 const root = document.getElementById("root")
 const webPageManager = new WebPageManager(root)
-// const REST = new RestInterface()
+const REST = new RestApi();
 
-modalComponent()
+// modalComponent()
 
 webPageManager.addPage("login-page",new LoginPage())
 webPageManager.addPage("join-page",new JoinPage())
@@ -17,7 +17,11 @@ webPageManager.addPage("manage-manual-page",new ManageManualPage())
 function isLogin(){return false;}
 function isMobile(){return true;}
 function init(){
-    webPageManager.setPage("main-page")
+    if(REST.getAuthToken()){
+        webPageManager.setPage("main-page")
+    }else{
+        webPageManager.setPage("main-page")
+    }
 }
 
 init();

@@ -17,12 +17,20 @@ class LoginPage extends WebPage{
             </div>
         </div>
         `);
-        let login = async ()=>{
-            const email = this.get("#email").value
+        let login = ()=>{
+            const username = this.get("#email").value
             const password = this.get("#password").value
-            const response = await REST.login(email,password);
-            if(response.state==0)manager.setPage("info-page")
-            else alert("로그인이 실패하였습니다.")
+            REST.login(username,password)
+            .then(res=>res.text()).then(res=>console.log(res)).catch(e=>console.log(e))
+            //     {
+            //     if(code==200){
+            //         localStorage.setItem("userId",data.userId);
+            //         REST.setAuthToken(data.token);
+            //         manager.setPage("main-page")
+            //     }
+            //     else alert("로그인이 실패하였습니다.")
+            // });
+            
         }
         
         this.addEvent(".login-button","click",login)

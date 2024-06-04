@@ -11,7 +11,7 @@ class ExperimentPage extends WebPage{
                 <div id="manual-selection-button-list"></div>
                 <div id="experiment-panel" class="display-none">
                     <p>실습을 위해 카메라를 작동합니다.<br>매뉴얼 안내대로 잘 이행해주세요.</p>
-                    <div><button>다음</button></div>
+                    <div><button id="next-button">다음</button></div>
                 </div>
             </div>
         </div>
@@ -55,6 +55,10 @@ class ExperimentPage extends WebPage{
 
             experimentPanel.classList.remove("display-none")
         }
+
+        this.addEvent("#next-button","click",()=>{
+            window.location.href = "uniwebview://onARmanual?id=1"
+        })
 
         
         return this.container;

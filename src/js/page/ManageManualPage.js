@@ -9,6 +9,10 @@ class ManageManualPage extends WebPage{
             <div class="wrapper">
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
+                <div id="manual-panel">
+                    <p>안내 오브젝트를 수정하려면 아래 버튼을 클릭해주세요</p>
+                    <div><button id="next-button">설정</button></div>
+                </div>
             </div>
         </div>
         `);
@@ -38,6 +42,8 @@ class ManageManualPage extends WebPage{
         }
 
 
+
+
         let createManualList=(expID)=>{
             const [manualDropdown, addManualOption] = dropdownComponent(
                 "매뉴얼 선택",
@@ -49,9 +55,15 @@ class ManageManualPage extends WebPage{
             manualDrobdownWrapper.appendChild(manualDropdown)
             let manualList=[{name:"진공기기"}, {name:"열전도기기"}, {name:"온도계 챔버"}]
             for(let i=0; i<manualList.length; i++){
-                addManualOption(i, manualList[i].name,"",()=>{})
+                addManualOption(i, manualList[i].name,"",()=>{
+                    this.get("manual-panel").classList.remove("display-none")
+                })
             }
         }
+
+        this.addEvent("#next-button","click",()=>{
+            window.location.href = "uniwebview://host?param1=value1&param2=value2"
+        })
 
         
         return this.container;

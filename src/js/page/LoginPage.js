@@ -21,15 +21,17 @@ class LoginPage extends WebPage{
             const username = this.get("#email").value
             const password = this.get("#password").value
             REST.login(username,password)
-            .then(res=>res.text()).then(res=>console.log(res)).catch(e=>console.log(e))
-            //     {
-            //     if(code==200){
-            //         localStorage.setItem("userId",data.userId);
-            //         REST.setAuthToken(data.token);
-            //         manager.setPage("main-page")
-            //     }
-            //     else alert("로그인이 실패하였습니다.")
-            // });
+            .then(res=>{
+                if(res.ok){
+                    return res.json()
+                }else{
+                    throw Error("login"+res.status)
+                }
+            })
+            .then((data)=>{
+                manager.setPage("main-page",data)
+            })
+            .catch(e=>console.error(e))
             
         }
         

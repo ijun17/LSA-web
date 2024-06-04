@@ -4,7 +4,8 @@ class ManageManualPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
-        <div id="topbar-component"></div>
+        <div id="topbar-component-wrapper"></div>
+        <div class="modal-component-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <div id="research-selection-button-list"></div>
@@ -16,10 +17,15 @@ class ManageManualPage extends WebPage{
             </div>
         </div>
         `);
-        this.get("#topbar-component").appendChild(topbarComponent("매뉴얼 설정", "main-page"))
-
+        const tobbarComponentWrapper = this.get("#topbar-component-wrapper")
+        const modalComponentWrapper = this.get(".modal-component-wrapper")
         const researchDropdownWrapper = this.get("#research-selection-button-list")
         const manualDrobdownWrapper = this.get("#manual-selection-button-list")
+
+        tobbarComponentWrapper.appendChild(topbarComponent("매뉴얼 설정", "main-page"))
+
+        const [modal, openModal, closeModal] = modalComponent();
+        modalComponentWrapper.appendChild(modal);
 
         const [researchDropdown, addResearchOption] = dropdownComponent(
             "연구 선택",
@@ -28,11 +34,6 @@ class ManageManualPage extends WebPage{
             true,
             true)
         researchDropdownWrapper.appendChild(researchDropdown)
-        // researchDropdown.querySelector(".selected-option-preview").addEventListener("click",(e)=>{
-        //     if(e.target.classList.contains("option")){
-        //         manualDrobdownWrapper.innerHTML = ""
-        //     }
-        // })
 
         let researchList=[{name:"디스플레이 신소재 개발"}, {name:"디스플레이 신소재 실험"}, {name:"딥러닝 기반 이미지 인식"}]
         for(let i=0; i<researchList.length; i++){
@@ -63,7 +64,8 @@ class ManageManualPage extends WebPage{
         }
 
         this.addEvent("#next-button","click",()=>{
-            window.location.href = "uniwebview://onAREditmanual?id=1"
+            if(isApp())window.location.href = "uniwebview://onAREditmanual?id=1"
+            else openModal(`<p>AR환경을 실행하기 위해서는<br>앱을 다운받아 주세요</p>`,["확인"],[()=>{closeModal()}])
         })
 
         

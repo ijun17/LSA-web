@@ -5,7 +5,7 @@ const REST = new RestApi();
 let isMobileFlagToFetchUniwebview=false;
 
 function isApp(){
-    return isMobileFlagToFetchUniwebview;
+    return true;
 }
 
 webPageManager.addPage("login-page",new LoginPage())

@@ -25,6 +25,7 @@ class LoginPage extends WebPage{
                 if(res.ok){
                     return res.json()
                 }else{
+                    console.log(res.status)
                     throw Error("login"+res.status)
                 }
             })

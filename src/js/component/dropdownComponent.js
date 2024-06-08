@@ -12,7 +12,7 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
             <div class="dropdown-top">
                 <div class="dropdown-description">${description}</div>
                 <div ${canFold?"":`class="display-none"`}>
-                    <button class="accordion-button"><image src="src/assets/images/_화살표 아이콘.png" width="15px"/></button>
+                    <button class="accordion-button"><image src="src/assets/images/arrow.png" width="15px"/></button>
                 </div>
             </div>
             <div class="option-list"></div>

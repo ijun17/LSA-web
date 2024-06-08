@@ -10,7 +10,7 @@ function manageLabComponent(labName,labId,univ,department,location){
                     <div><span class="text1">${labName}</span><span class="text4">  ${labId}</span></div>
                     <div>
                         <span class="new-badge"></span>
-                        <button class="accordion-button"><image src="src/assets/images/_화살표 아이콘.png" width="15px"/></button>
+                        <button class="accordion-button"><image src="src/assets/images/arrow.png" width="15px"/></button>
                     </div>
                 </div>
                 <div class="text3">${univ+" | "+department+" | "+location}</div>
@@ -42,7 +42,7 @@ function manageLabComponent(labName,labId,univ,department,location){
 
     const getUserInfo=(type, univ, department, name, id)=>{
         return `<div class="list-body">
-            <div class="list-profile-image"><img src="src/assets/images/사람 아이콘.png" width=51px/></div>
+            <div class="list-profile-image"><img src="src/assets/images/profile_image.png" width=51px/></div>
             <div class="list-info">
                 <div class="text4">${type+" | "+univ+" | "+department}</div>
                 <div><span class="text2">${name}</span><span class="text4">${id}</span></div>

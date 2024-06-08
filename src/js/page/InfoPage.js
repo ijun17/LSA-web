@@ -19,12 +19,12 @@ class InfoPage extends WebPage{
                 <div class="main-text2">5. 당신의 <span style="color:var(--main-color);">직책</span>은 무엇인가요?</div>
                 <div class="select-duty-wrapper">
                     <div class="select-duty" id="info51">
-                        <img src="src/assets/images/전문 연구자.png" width=104px/><br>
+                        <img src="src/assets/images/researcher.png" width=104px/><br>
                         전문 연구자<br>
                         (교수님)
                     </div>
                     <div class="select-duty" id="info52" style="background-color:#F0F0F0;">
-                        <img src="src/assets/images/실습자.png" width=140px/><br>
+                        <img src="src/assets/images/student.png" width=140px/><br>
                         실습자<br>
                         (학생)
                     </div>

@@ -121,10 +121,10 @@ class MainPage extends WebPage{
             <div>
                 <div class="select-lab">
                     <div class="lab-name">연구실을 설정해주세요. </div>
-                    <img src="src/assets/images/토글 아이콘.png" width=10px height=6.26px style="margin-left:5px;"/> 
+                    <img src="src/assets/images/toggle.png" width=10px height=6.26px style="margin-left:5px;"/> 
                 </div>
                 <div class="mini-profile">
-                    <img src="src/assets/images/사람 아이콘.png" width=51px style="margin-right:10px;"/>
+                    <img src="src/assets/images/profile_image.png" width=51px style="margin-right:10px;"/>
                     <div>
                         <div class="duty">전문 연구자</div>
                         <div class="name">김순태</div>
@@ -194,13 +194,13 @@ class MainPage extends WebPage{
         return `
             <div class="lab-manage space-between">
                 <div>
-                    <img src="src/assets/images/연구실 아이콘.png" width=90px/>
+                    <img src="src/assets/images/lab_icon.png" width=90px/>
                     <div>
                         <div style="font-size:19px; font-weight:bold; color: #505F74"; >연구실 관리</div>
                         <div style="font-size:16px; color: #6B7684"; >새로 들어온 신청</div>
                     </div>
                 </div>
-                <img src="src/assets/images/_화살표 아이콘.png" width=15px height=15px style="margin-right:20px;"/>
+                <img src="src/assets/images/arrow.png" width=15px height=15px style="margin-right:20px;"/>
             </div>
             <div class="main-button-wrapper">
                 <button id="experiment-button"><img src="src/assets/images/4.png" width=116px/><div>실습하기</div></button>

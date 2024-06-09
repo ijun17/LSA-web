@@ -17,6 +17,11 @@
 body{
     color:var(--text-color);
     background-color: var(--background-color);
+    -ms-overflow-style: none;
+}
+    
+::-webkit-scrollbar {
+    display: none;
 }
 
 input::placeholder {

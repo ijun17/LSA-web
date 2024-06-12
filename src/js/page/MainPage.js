@@ -8,7 +8,8 @@ class MainPage extends WebPage{
         <div class="bottom-sheet-overlay overlay display-none"></div>
         <div class="background"></div>
         <div class="modal-component-wrapper"></div>
-        ${this.labBottomSheet()+this.userInfoBottomSheet()+this.topBar()}
+        ${this.labBottomSheet()+this.topBar()}
+        <div class="user-info-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <div class="greeting"></div>
@@ -32,31 +33,31 @@ class MainPage extends WebPage{
             {name:"전자재료 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
             {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
         ];
-        const userInfo={name:"김준기",univ:"전북대학교",major:"소프트웨어공학과",duty:"전문연구자",code:"1234567"}
 
 
-        const renderMainPage = (name, duty)=>{
-            this.get(".greeting").innerText = name+"님, 안녕하세요  🥽"
-            this.get(".top-bar").querySelector(".name").innerText = name
-            this.get(".top-bar").querySelector(".duty").innerText = duty
-        }
+        const [userInfoBottomSheet, setUserInfoBottomSheet, openUserInfoBottomSheet]=createUserInfoBottomSheetComponent();
+        this.get(".modal-component-wrapper").appendChild(userInfoBottomSheet);
+        this.addEvent(".mini-profile","click",openUserInfoBottomSheet)
 
-        renderMainPage(userInfo.name, userInfo.duty);
+
+        REST.getUserInfo({}, (status, data)=>{
+            data.role = data.role=="RESEARCHER" ? "전문연구자" : "실습자"
+            setUserInfoBottomSheet(data)
+            this.get(".greeting").innerText = data.name+"님, 안녕하세요  🥽"
+            this.get(".top-bar .name").innerText = data.name;
+            this.get(".top-bar .role").innerText = data.role;
+        })
+
+        REST.getLabsOfUser({}, (status, data)=>{
+
+        })
+
 
         // 연구실 바텀 시트에 연구실 정보를 생성
         const createLabList=(labInfos)=>{
             let innerHTML="";
             for(let i=0; i<labInfos.length; i++)innerHTML+=this.createLabInfo(labInfos[i]);
             this.get(".lab-list").innerHTML=innerHTML;
-        }
-
-        //유저 정보 바텀 시트에 유저 정보를 생성
-        const createUserInfo = (userInfo)=>{
-            this.get("#user-info1").value = userInfo.name
-            this.get("#user-info2").value = userInfo.duty
-            this.get("#user-info3").value = userInfo.univ
-            this.get("#user-info4").value = userInfo.major
-            this.get("#user-info5").value = userInfo.code
         }
 
         //연구실 선택
@@ -73,22 +74,11 @@ class MainPage extends WebPage{
             }
         }
         createLabList(labInfos)
-        createUserInfo(userInfo)
         selectLab(this.selectedLabID)
-
-        const logout=()=>{
-            webPageManager.setPage("login-page")
-        }
 
         const closeBottomSheet = ()=>{
             this.get(".bottom-sheet-overlay").classList.add("display-none");
             this.get("#lab-bottom-sheet").classList.remove("bottom-sheet-up");
-            this.get("#user-info-bottom-sheet").classList.remove("bottom-sheet-up");
-        }
-
-        const showProfileBottomSheet = ()=>{
-            this.get(".bottom-sheet-overlay").classList.remove("display-none");
-            this.get("#user-info-bottom-sheet").classList.add("bottom-sheet-up");
         }
 
         const showLabBottomSheet = ()=>{
@@ -97,7 +87,6 @@ class MainPage extends WebPage{
         }
 
         // 바텀 시트 이벤트
-        this.addEvent(".mini-profile","click",showProfileBottomSheet)
         this.addEvent(".select-lab","click",showLabBottomSheet)
         this.addEvent(".bottom-sheet-overlay","click",closeBottomSheet)
 
@@ -108,9 +97,6 @@ class MainPage extends WebPage{
         this.addEvent(".lab-manage","click",()=>{webPageManager.setPage("manage-lab-page")})
         this.addEvent("#experiment-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("experiment-page")})
         this.addEvent("#manual-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("manage-manual-page")})
-
-        //로그아웃 버튼을 눌렀을떄
-        this.addEvent(".logout","click",logout)
 
         return this.container;
     }
@@ -126,7 +112,7 @@ class MainPage extends WebPage{
                 <div class="mini-profile">
                     <img src="src/assets/images/profile_image.png" width=51px style="margin-right:10px;"/>
                     <div>
-                        <div class="duty">전문 연구자</div>
+                        <div class="role">전문 연구자</div>
                         <div class="name">김순태</div>
                     </div>
                 </div>
@@ -165,27 +151,6 @@ class MainPage extends WebPage{
                 <div><button class="lab-select-button" data-id="${labInfo.id}" data-name="${labInfo.name}"></button></div>
             </div>
             <div style="color:#6B7684;font-size:16px;">${labInfo.univ} | ${labInfo.major} | ${labInfo.location}</div>
-        </div>`
-    }
-    // 유저 정보 바텀 시트
-    userInfoBottomSheet(){
-        return `
-        <div class="bottom-sheet" id="user-info-bottom-sheet">
-            <div>
-                <div style="background-color:#e6e6e6;width:15%;height:6.5px;border-radius:3.2px;margin-bottom:30px;"></div>
-                <div class="space-between" style="width:100%">
-                    <div class="hidden" style="width:70px;"><button style="border:none; background-color:unset;"><img src="src/assets/images/back.png" width=25px/></button></div>
-                    <div style="font-size:22px;font-weight:bold; color:#3F4956">사용자 정보 설정</div>
-                    <div class="logout" style="width:70px;">로그아웃</div>
-                </div>
-            </div>
-            <div class="user-info">
-                <p>이름</p><div class="text-center"><input class="main-input" id="user-info1" readonly></div>
-                <p>직책</p><div class="text-center"><input class="main-input" id="user-info2" readonly></div>
-                <p>소속 학교</p><div class="text-center"><input class="main-input" id="user-info3" readonly></div>
-                <p>소속 전공</p><div class="text-center"><input class="main-input" id="user-info4" readonly></div>
-                <p>학번 / 사번</p><div class="text-center"><input class="main-input" id="user-info5" readonly></div>
-            </div>
         </div>`
     }
 

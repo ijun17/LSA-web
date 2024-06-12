@@ -20,19 +20,11 @@ class LoginPage extends WebPage{
         let login = ()=>{
             const username = this.get("#email").value
             const password = this.get("#password").value
-            REST.login(username,password)
-            .then(res=>{
-                if(res.ok){
-                    return res.json()
-                }else{
-                    console.log(res.status)
-                    throw Error("login"+res.status)
-                }
-            })
-            .then((data)=>{
+            REST.login({username,password}, (status,data)=>{
+                REST.setAuthToken(data.token)
+                REST.setUserId(data.userId)
                 manager.setPage("main-page",data)
-            })
-            .catch(e=>console.error(e))
+            },(status, data)=>{console.error(status, data)})
             
         }
         

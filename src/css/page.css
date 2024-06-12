@@ -220,7 +220,7 @@
     width:fit-content;
 }
 
-#main-page .mini-profile .duty{
+#main-page .mini-profile .role{
     font-size:15px;
     font-weight: bold;
     color:#6B7684;
@@ -414,18 +414,18 @@
 
 
 
-#main-page #user-info-bottom-sheet .user-info{
+#main-page .user-info-bottom-sheet-component .user-info{
     width:100%;
 }
 
-#main-page #user-info-bottom-sheet p{
+#main-page .user-info-bottom-sheet-component p{
     font-size: 18px;
     color:#6B7684;
     margin-left:44px;
     margin-top:24px;
 }
 
-#main-page #user-info-bottom-sheet .main-input{
+#main-page .user-info-bottom-sheet-component .main-input{
     font-size:18px;
     width:87%;
     height:59px;
@@ -433,13 +433,13 @@
     color:#6B7684;
 }
 
-#main-page #user-info-bottom-sheet .logout{
+#main-page .user-info-bottom-sheet-component .logout{
     font-size: 18px;
     color:#6B7684;
     font-weight: bold;
 }
 
-#main-page #user-info-bottom-sheet .logout:hover{
+#main-page .user-info-bottom-sheet-component .logout:hover{
     text-decoration: underline;
 }
 

@@ -1,6 +1,6 @@
 const root = document.getElementById("root")
 const webPageManager = new WebPageManager(root)
-const REST = new RestApi();
+const REST = new TestRestApi();
 
 let isMobileFlagToFetchUniwebview=false;
 
@@ -21,21 +21,12 @@ webPageManager.addPage("manage-manual-page",new ManageManualPage())
 function isLogin(){return false;}
 function isMobile(){return true;}
 function init(){
-    fetch("uniwebview://isMobile")
-    .then(()=>{
-        isMobileFlagToFetchUniwebview=true;
-        console.log("[ENVIRONMENT] Mobile App")
-    })
-    .catch((e)=>{
-        isMobileFlagToFetchUniwebview=false;
-        console.log("[ENVIRONMENT] Web Browser")
-    })
     
 
-    if(REST.getAuthToken()){
+    if(REST.getAuthToken() && REST.getUserId()){
         webPageManager.setPage("main-page")
     }else{
-        webPageManager.setPage("main-page")
+        webPageManager.setPage("login-page")
     }
 }
 

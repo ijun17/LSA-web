@@ -1,4 +1,4 @@
-function manageLabComponent(labName,labId,univ,department,location){
+function manageLabComponent(labName,labId,dept){
     const div = document.createElement("div")
     div.className="manage-lab-component"
     div.innerHTML=`
@@ -7,13 +7,13 @@ function manageLabComponent(labName,labId,univ,department,location){
         <div class="body">
             <div class="top">
                 <div>
-                    <div><span class="text1">${labName}</span><span class="text4">  ${labId}</span></div>
+                    <div><span class="text1">${labName}</span><span class="text4">ID ${labId}</span></div>
                     <div>
                         <span class="new-badge"></span>
                         <button class="accordion-button"><image src="src/assets/images/arrow.png" width="15px"/></button>
                     </div>
                 </div>
-                <div class="text3">${univ+" | "+department+" | "+location}</div>
+                <div class="text3">${"전북대학교"+" | "+dept}</div>
             </div>
             <div class="folder">
                 <h1 class="text1">연구실 멤버<span class="new-badge"></span></h1>
@@ -40,32 +40,38 @@ function manageLabComponent(labName,labId,univ,department,location){
     }
 
 
-    const getUserInfo=(type, univ, department, name, id)=>{
+    const getUserInfo=(role, dept, name, staffId)=>{
+        role = role=="RESEARCHER"?"전문 연구자":"실습자"
         return `<div class="list-body">
             <div class="list-profile-image"><img src="src/assets/images/profile_image.png" width=51px/></div>
             <div class="list-info">
-                <div class="text4">${type+" | "+univ+" | "+department}</div>
-                <div><span class="text2">${name}</span><span class="text4">${id}</span></div>
+                <div class="text4">${role+" | "+"전북대학교"+" | "+dept}</div>
+                <div><span class="text2">${name}</span><span class="text4">${staffId}</span></div>
             </div>
         </div>`
     }
 
-    const deleteMember = async ()=>{
-
+    const deleteMember = (list,userId)=>{
+        REST.removeLabMember({userId, labId}, ()=>{
+            console.log("멤버가 삭제되었습니다.")
+            list.remove()
+        })
     }
 
-    const deleteWait = async ()=>{
-
+    const responseWait = (list, req, accept)=>{
+        REST.responseJoinLabReqeust({requestId:req.requestId, accept},()=>{
+            req.name = req.userName
+            if(accept==1){ //수락
+                addMemberList(req)
+            }
+            list.remove()
+        })
     }
 
-    const acceptWait = async ()=>{
-
-    }
-
-    const addMemberList = (type, univ, department, name, id)=>{
+    const addMemberList = (member)=>{
         const list = document.createElement("div");
         list.innerHTML=`
-        ${getUserInfo(type, univ, department, name, id)}
+        ${getUserInfo(member.role, member.dept, member.name, member.staffId)}
         <div class="button-part">
             <button class="delete-button">삭제</button>
         </div>
@@ -75,19 +81,19 @@ function manageLabComponent(labName,labId,univ,department,location){
             openModal(`<p>이 실습자를 삭제하겠습니까</p>`,["취소","삭제"],[
                 ()=>{closeModal()},
                 ()=>{
-                    list.remove();
+                    deleteMember(list,member.userId)
                     closeModal();
-                    deleteMember();
                 }]
             )
         })
+        if(member.userId == REST.getUserId())deleteButton.style.visibility = "hidden";
         memberList.appendChild(list);
     }
 
-    const addWaitList = (type, univ, department, name, id)=>{
+    const addWaitList = (req)=>{
         const list = document.createElement("div");
         list.innerHTML=`
-        ${getUserInfo(type, univ, department, name, id)}
+        ${getUserInfo(req.role, req.dept, req.userName, req.staffId)}
         <div class="button-part">
             <button class="accept-button">수락</button>
             <button class="deny-button">거절</button>
@@ -95,30 +101,29 @@ function manageLabComponent(labName,labId,univ,department,location){
         `
         const acceptButton = list.querySelector(".accept-button");
         const denyButton = list.querySelector(".deny-button");
-        acceptButton.addEventListener("click",()=>{
-            acceptWait(type, univ, department, name, id)
-        });
-        denyButton.addEventListener("click",()=>{
-            list.remove();
-            deleteWait(type, univ, department, name, id)
-        })
+        acceptButton.addEventListener("click",()=>{responseWait(list, req, 1)});
+        denyButton.addEventListener("click",()=>{responseWait(list, req, 0)});
 
         waitList.appendChild(list);
     }
 
 
+    REST.getLabMembers({labId},(status, data)=>{
+        for(let member of data){
+            addMemberList(member)
+        }
+    })
 
-    const testMemberList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김준기", id:"201911023"},{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"김규호", id:"201923478"}]
-    const testWaitList = [{type:"실습자", univ:"전북대학교", department:"소프트웨어공학과", name:"최태운", id:"201912762"}]
-    for(let member of testMemberList){
-        addMemberList(member.type, member.univ, member.department, member.name, member.id)
-    }
+    REST.getJoinRequestOfLab({labId},(status, data)=>{
+        for(let req of data){
+            addWaitList(req)
+        }
+    })
+    
+    
 
-    for(let member of testWaitList){
-        addWaitList(member.type, member.univ, member.department, member.name, member.id)
-    }
 
 
     accordionButton.addEventListener("click",clickAccordionButton)
-    return [div, addMemberList, addWaitList]
+    return [div]
 }

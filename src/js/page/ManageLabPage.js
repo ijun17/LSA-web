@@ -29,13 +29,13 @@ class ManageLabPage extends WebPage{
             [()=>{closeModal()},()=>{}])
         }
 
-        //manage lab
         const manageLabComponentWrapper = this.get(".manage-lab-component-wrapper");
-        const [manageLabComp,addMemberList,addWaitList] = manageLabComponent("전자재료 연구실","ID 073294","전북대학교","소프트웨어공학과","공대 5호관 507호")
-        manageLabComponentWrapper.appendChild(manageLabComp);
-
-        const [manageLabComp2,addMemberList2,addWaitList2] = manageLabComponent("운영체제 연구실","ID 073293","전북대학교","소프트웨어공학과","공대 5호관 507호")
-        manageLabComponentWrapper.appendChild(manageLabComp2);
+        REST.getLabsOfUser({},(status,data)=>{
+            for(let lab of data){
+                const [manageLabComp] = manageLabComponent(lab.labName,lab.labId,lab.dept)
+                manageLabComponentWrapper.appendChild(manageLabComp);
+            }
+        })
         
         return this.container;
     }

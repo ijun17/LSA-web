@@ -79,6 +79,14 @@
     line-height: 1.2;
 }
 
+.main-text3{
+    margin-left:40px;
+    margin-bottom:15px;
+    font-size:18px;
+    color:#595959;
+    line-height: 1.2;
+}
+
 
 .warning-text{
     font-size:16px;
@@ -119,6 +127,37 @@
 
 /* join-page */
 
+#join-page .select-duty-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#join-page .select-duty{
+    min-width: 150px;
+    width:44%;
+    height:265px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #CFE1FC;
+    padding-top: 36px;
+    font-size:19px;
+    font-weight: bold;
+    color:#515866;
+}
+
+#join-page .border{
+    border:solid var(--main-color) 3px;
+}
+
+#join-page .info-warning-text{
+    font-size:18px;
+    color:var(--warning-color);
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.5;
+    visibility: hidden;
+}
+
 #join-page .email-auth-button{
     position: absolute;
     right: 5.8%;
@@ -133,10 +172,6 @@
     max-width: 140px;
     border:solid var(--border-color) 1.2px;
 }
-
-
-
-
 
 
 /* info-page */
@@ -325,12 +360,14 @@
 #main-page .bottom-sheet>div:first-child{
     background-color: var(--background-color);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    /* height:171px; */
     padding:10px 25px 25px 25px;
     display: flex;
     align-items: center;
     flex-direction: column;
+    position: sticky;
+    top:0;
 }
+
 
 #main-page .bottom-sheet>div:first-child>div:nth-child(3){
     background-color: #F2F4F6;
@@ -362,6 +399,7 @@
 #main-page .lab-list{
     padding: 20px;
     overflow-y: auto;
+    width:100%;
 }
 
 #main-page .lab-list>div{

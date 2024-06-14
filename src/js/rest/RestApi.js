@@ -109,9 +109,8 @@ class RestApi{
     }
 
     //5 연구실 멤버 삭제
-    removeLabMember({labId}, handler, errorHandler){
+    removeLabMember({userId,labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        const userId = this.getUserId();
         const promise = this.post(`/api/labs/remove-membership?userId=${userId}&labId=${labId}`,{},true)
         this.toText(promise, handler, errorHandler)
     }

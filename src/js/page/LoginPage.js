@@ -4,6 +4,7 @@ class LoginPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
+        <div class="modal-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <p class="main-text1">안전한 연구를 꿈꾸는<br>연구실 보조 매니지먼트 시스템</p>
@@ -17,6 +18,10 @@ class LoginPage extends WebPage{
             </div>
         </div>
         `);
+
+        const [modal, openModal, closeModal] = modalComponent();
+        this.get(".modal-wrapper").appendChild(modal)
+
         let login = ()=>{
             const username = this.get("#email").value
             const password = this.get("#password").value
@@ -24,7 +29,9 @@ class LoginPage extends WebPage{
                 REST.setAuthToken(data.token)
                 REST.setUserId(data.userId)
                 manager.setPage("main-page",data)
-            },(status, data)=>{console.error(status, data)})
+            },(status, data)=>{
+                openModal(`<h1>로그인 실패</h1><p>아이디와 비밀번호를 확인해주세요.</p>`,["확인"],[closeModal])
+            })
             
         }
         

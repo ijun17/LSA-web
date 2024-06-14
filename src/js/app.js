@@ -24,7 +24,7 @@ function init(){
     
 
     if(REST.getAuthToken() && REST.getUserId()){
-        webPageManager.setPage("main-page")
+        webPageManager.setPage("join-page")
     }else{
         webPageManager.setPage("login-page")
     }

@@ -11,8 +11,11 @@ class TestRestApi{
         {userId:5,name:"최태운",dept:"소프트웨어공학과",role:"STUDENT",staffId:"22245",username:"5",password:"5",token:5},
     ]
     labDb=[
-        {labId:1,name:"LSA 연구실",dept:"소프트웨어공학과",member:[1,2,3]},
-        {labId:2,name:"Crenu 연구실",dept:"소프트웨어공학과",member:[1]}
+        {labId:1,labName:"LSA 연구실",dept:"소프트웨어공학과",member:[1,2,3]},
+        {labId:2,labName:"Crenu 연구실",dept:"소프트웨어공학과",member:[1]},
+        {labId:3,labName:"인공지능 연구실",dept:"소프트웨어공학과",member:[]},
+        {labId:4,labName:"운영체제 연구실",dept:"소프트웨어공학과",member:[]},
+        {labId:5,labName:"클라우드 연구실",dept:"소프트웨어공학과",member:[]}
     ]
     requestId=5
     requestDb=[
@@ -110,35 +113,40 @@ class TestRestApi{
     requestJoinLab({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const userId = this.getUserId();
-        const requestId = this.requestId++
-        this.requestDb.push({userId,labId,requestId})
-        handler(200,"sucess")
+        const lab = this.labDb.find(e=>e.labId == labId)
+        if(lab.member.indexOf(userId)<0){
+            const requestId = this.requestId++
+            this.requestDb.push({userId,labId,requestId})
+            handler(200,"sucess")
+        }else{
+            errorHandler(400,"fail")
+        }
+        
     }
 
     //완료 6.12
     //5 연구실 멤버 삭제
-    removeLabMember({labId}, handler, errorHandler){
+    removeLabMember({userId,labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        
-        const userId = this.getUserId();
-        for(let lab of this.labDb){
-            if(lab.labId == labId){
-                lab.request.splice(lab.request.indexOf(userId),1)
-                handler(200,"sucess")
-                return;
-            }
-        }
-        errorHandler(400,"fail")
+        const lab = this.labDb.find(e=>e.labId == labId)
+        if(lab){
+            const ui = lab.member.indexOf(userId)
+            lab.member.splice(ui,1)
+            console.log(lab.member)
+            handler(200,"sucess")
+        }else errorHandler(400,"fail")
     }
 
     //완료 6.12
     //6 연구실 신청한거 승인/거절
     responseJoinLabReqeust({requestId,accept}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        const id = this.requestDb.findIndex(ele=>{return requestId == ele.requestId})
-        const lab = this.labDb.fint(ele=>{return ele.labId == this.requestDb[id].labId})
-        if(accept==1)lab.member.push(this.requestDb[id].userId)
-        this.requestDb.splice(id,1)
+        const ri = this.requestDb.findIndex(e=>requestId == e.requestId)
+        const req = this.requestDb[ri]
+        const lab = this.labDb.find(e=>e.labId == req.labId)
+        if(accept==1)lab.member.push(req.userId)
+        this.requestDb.splice(ri,1)
+        handler(200,"sucess")
     }
 
     //완료 6.12
@@ -167,15 +175,27 @@ class TestRestApi{
     getLabMembers({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
         let result = []
-        for(let ui of this.labDb.find(e=>labId == e.labId)){
-            let user = this.userDb[ui]
-            // result.push({user.})
+        const lab = this.labDb.find(e=>labId == e.labId)
+        for(let ui of lab.member){
+            let user = this.userDb.find(e=>e.userId == ui)
+            const name=user.name, dept=user.dept, userId=user.userId, staffId=user.staffId, role=user.role;
+            result.push({userId, name, role, dept, staffId})
         }
+        handler(200,result)
     }
 
     //9 연구실에 신청한 유저 조회
     getJoinRequestOfLab({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        let result = []
+        for(let req of this.requestDb){
+            if(req.labId == labId){
+                const user=this.userDb.find(e=>e.userId == req.userId)
+                const userName=user.name, dept=user.dept, userId=user.userId, staffId=user.staffId, role=user.role, requestId=req.requestId;
+                result.push({userName, dept, userId, staffId, role, requestId})
+            }
+        }
+        handler(200, result)
     }
 
     //10 유저가 소속된 연구실 조회 [{labId, labName, dept}]
@@ -208,6 +228,13 @@ class TestRestApi{
     //12 아이디로 연구실 조회
     getLabInfo({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const lab = this.labDb.find(e=>e.labId == labId);
+        if(lab){
+            const labName = lab.labName, dept=lab.dept
+            handler(200,{labName, labId, dept})
+        }else{
+            errorHandler(404,"no lab")
+        }
     }
 
     //13 연구조회

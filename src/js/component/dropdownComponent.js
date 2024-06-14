@@ -1,4 +1,4 @@
-function dropdownComponent(title, description, selectDescription, canFold=true, canSelect=true){
+function dropdownComponent(title, description, selectDescription, canFold=true, canSelect=true, canEdit=true){
 
     const optionClassName = "option"
     const selectedOptionClassName = "selected-option"

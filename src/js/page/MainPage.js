@@ -8,8 +8,9 @@ class MainPage extends WebPage{
         <div class="bottom-sheet-overlay overlay display-none"></div>
         <div class="background"></div>
         <div class="modal-component-wrapper"></div>
-        ${this.labBottomSheet()+this.topBar()}
+        ${this.topBar()}
         <div class="user-info-wrapper"></div>
+        <div class="lab-info-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <div class="greeting"></div>
@@ -19,26 +20,23 @@ class MainPage extends WebPage{
         </div>
         `);
 
+
+        //모달 컴포넌트
         const modalComponentWrapper = this.get(".modal-component-wrapper");
         const [modal, openModal, closeModal] = modalComponent();
         modalComponentWrapper.appendChild(modal);
         function showErrorModal(){
             openModal(
-                `<h1>오류</h1><p>연구실에 소속되어 있지 않습니다.</p><p><span class="main-color">연구실 소속</span>을 등록하고,<br> 다시 시도해주세요.</p>`,
-                ["확인", "등록하기"],
-                [()=>{closeModal()},()=>{closeModal();showLabBottomSheet();}])
+                `<h1>오류</h1><p><span class="main-color">연구실</span>을 선택해주세요.</p>`,
+                ["확인", "선택하기"],
+                [()=>{closeModal()},()=>{closeModal();openLabInfoBottomSheet();}])
         }
 
-        const labInfos=[
-            {name:"전자재료 연구실", id:"ID 073294", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 507호"},
-            {name:"운영체제 연구실", id:"ID 987123", univ:"전북대학교", major:"소프트웨어공학과", location:"공대 5호관 503호"}
-        ];
 
-
+        // 사용자 정보 바텀 시트 컴포넌트
         const [userInfoBottomSheet, setUserInfoBottomSheet, openUserInfoBottomSheet]=createUserInfoBottomSheetComponent();
-        this.get(".modal-component-wrapper").appendChild(userInfoBottomSheet);
+        this.get(".user-info-wrapper").appendChild(userInfoBottomSheet);
         this.addEvent(".mini-profile","click",openUserInfoBottomSheet)
-
 
         REST.getUserInfo({}, (status, data)=>{
             data.role = data.role=="RESEARCHER" ? "전문연구자" : "실습자"
@@ -48,47 +46,14 @@ class MainPage extends WebPage{
             this.get(".top-bar .role").innerText = data.role;
         })
 
-        REST.getLabsOfUser({}, (status, data)=>{
-
+        // 연구실 바텀 시트
+        const [labInfoBottomSheet, selectLab, openLabInfoBottomSheet]=createLabInfoBottomSheetComponent((id, name)=>{
+            this.get(".lab-name").innerText=name;
+            this.selectedLabID = id;
         })
-
-
-        // 연구실 바텀 시트에 연구실 정보를 생성
-        const createLabList=(labInfos)=>{
-            let innerHTML="";
-            for(let i=0; i<labInfos.length; i++)innerHTML+=this.createLabInfo(labInfos[i]);
-            this.get(".lab-list").innerHTML=innerHTML;
-        }
-
-        //연구실 선택
-        const selectLab=(labID)=>{
-            this.selectedLabID = labID;
-            const buttons = this.get(".lab-list").querySelectorAll(".lab-select-button")
-            for(let btn of buttons){
-                if(btn.dataset.id==this.selectedLabID){
-                    btn.classList.add("lab-select-button-selected")
-                    this.get(".lab-name").innerText=btn.dataset.name;
-                } else {
-                    btn.classList.remove("lab-select-button-selected")
-                }
-            }
-        }
-        createLabList(labInfos)
+        this.get(".lab-info-wrapper").appendChild(labInfoBottomSheet);
+        this.addEvent(".select-lab","click",openLabInfoBottomSheet);
         selectLab(this.selectedLabID)
-
-        const closeBottomSheet = ()=>{
-            this.get(".bottom-sheet-overlay").classList.add("display-none");
-            this.get("#lab-bottom-sheet").classList.remove("bottom-sheet-up");
-        }
-
-        const showLabBottomSheet = ()=>{
-            this.get(".bottom-sheet-overlay").classList.remove("display-none");
-            this.get("#lab-bottom-sheet").classList.add("bottom-sheet-up");
-        }
-
-        // 바텀 시트 이벤트
-        this.addEvent(".select-lab","click",showLabBottomSheet)
-        this.addEvent(".bottom-sheet-overlay","click",closeBottomSheet)
 
         // 랩 선택을 눌렀을때
         this.addEvent(".lab-list","click",(e)=>{ if(e.target.classList.contains("lab-select-button"))selectLab(e.target.dataset.id);})
@@ -117,40 +82,6 @@ class MainPage extends WebPage{
                     </div>
                 </div>
             </div>
-        </div>`
-    }
-    //연구실 선택 바텀 시트
-    labBottomSheet(){
-        return `
-        <div class="bottom-sheet" id="lab-bottom-sheet">
-            <div>
-                <div style="background-color:#e6e6e6;width:15%;height:6.5px;border-radius:3.2px;margin-bottom:30px;"></div>
-                <div class="space-between" style="width:100%">
-                    <div class="hidden" style="color:#6B7684;font-size:18px;">편집</div>
-                    <div style="font-size:22px;font-weight:bold; color:#3F4956">연구실 선택</div>
-                    <div class="hidden" style="color:#6B7684;font-size:18px;font-weight:bold;">편집</div>
-                </div>
-                <div>
-                    <img src="src/assets/images/search.png" width=30px height=30px/> 
-                    <input placeholder="연구실 검색" id="lab-search">
-                </div>
-            </div>
-            <div class="lab-list">
-            </div>
-        </div>`
-    }
-    // 연구실 선택 바텀 시트 내부 연구실 정보
-    createLabInfo(labInfo){
-        return `
-        <div>
-            <div class="space-between">
-                <div class="space-between">
-                    <div style="color:#505F74; font-size:19px; font-weight:bold; margin-right:10px;">${labInfo.name}</div>
-                    <div style="color:#6B7684; font-size:15px;">${labInfo.id}</div>
-                </div>
-                <div><button class="lab-select-button" data-id="${labInfo.id}" data-name="${labInfo.name}"></button></div>
-            </div>
-            <div style="color:#6B7684;font-size:16px;">${labInfo.univ} | ${labInfo.major} | ${labInfo.location}</div>
         </div>`
     }
 

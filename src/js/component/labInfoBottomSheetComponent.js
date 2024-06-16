@@ -46,10 +46,11 @@ function createLabInfoBottomSheetComponent(handleLabSelected){
         </div>`
     }
 
-    const selectLab=(labID)=>{
+    const selectLab=(labId)=>{
+        localStorage.setItem("selectedLabID", labId)
         const buttons = labList.querySelectorAll(".lab-select-button")
         for(let btn of buttons){
-            if(btn.dataset.id==labID){
+            if(btn.dataset.id==labId){
                 btn.classList.add("lab-select-button-selected")
                 handleLabSelected(btn.dataset.id, btn.dataset.name)
             } else {
@@ -63,6 +64,7 @@ function createLabInfoBottomSheetComponent(handleLabSelected){
             myLabs.push(lab)
             addLabInfo(lab)
         }
+        if(localStorage.getItem("selectedLabID"))selectLab(localStorage.getItem("selectedLabID"));
     })
 
     const openBottomSheet = ()=>{
@@ -79,22 +81,22 @@ function createLabInfoBottomSheetComponent(handleLabSelected){
         if (event.key === 'Enter') {
             const labId = Number(labSearchInput.value);
             REST.getLabInfo({labId}, (status, data)=>{
-                if(myLabs.findIndex(e=>e.labId == labId)<0){
-                    showModal(`
-                        <h1>${data.labName}</h1>
-                        <p>${"전북대학교"} ${data.dept}</p>`,
-                    ["확인", "가입"],
+
+                if(myLabs.findIndex(e=>e.labId == labId)<0 && localStorage.getItem("role")=="STUDENT"){
+                    showModal(`<h1>${data.labName}</h1><p>${"전북대학교"} ${data.dept}</p>`,
+                    ["확인", "신청"],
                     [()=>{closeModal()},()=>{
                         closeModal()
                         REST.requestJoinLab({labId}
                             ,()=>{showModal(`<p>연구실 가입 신청이<br> 완료되었습니다.</p>`,["확인"],[()=>{closeModal()}])}
                             ,()=>{showModal(`<p>연구실 가입 신청을<br> 실패했습니다.</p>`,["확인"],[()=>{closeModal()}])})
                     }])
+                }else if(localStorage.getItem("role")!="STUDENT"){
+                    showModal(`<h1>${data.labName}</h1><p>${"전북대학교"} ${data.dept}</p><p>(소속된 연구실입니다)</p>`,
+                    ["확인"],
+                    [()=>{closeModal()}])
                 }else{
-                    showModal(`
-                        <h1>${data.labName}</h1>
-                        <p>${"전북대학교"} ${data.dept}</p>
-                        <p>(소속된 연구실입니다)</p>`,
+                    showModal(`<h1>${data.labName}</h1><p>${"전북대학교"} ${data.dept}</p><p>(소속된 연구실입니다)</p>`,
                     ["확인"],
                     [()=>{closeModal()}])
                 }

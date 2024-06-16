@@ -1,5 +1,4 @@
 class MainPage extends WebPage{
-    selectedLabID=null;
     constructor(){
         super()
     }
@@ -37,31 +36,26 @@ class MainPage extends WebPage{
         const [userInfoBottomSheet, setUserInfoBottomSheet, openUserInfoBottomSheet]=createUserInfoBottomSheetComponent();
         this.get(".user-info-wrapper").appendChild(userInfoBottomSheet);
         this.addEvent(".mini-profile","click",openUserInfoBottomSheet)
-
         REST.getUserInfo({}, (status, data)=>{
             data.role = data.role=="RESEARCHER" ? "전문연구자" : "실습자"
             setUserInfoBottomSheet(data)
             this.get(".greeting").innerText = data.name+"님, 안녕하세요  🥽"
             this.get(".top-bar .name").innerText = data.name;
             this.get(".top-bar .role").innerText = data.role;
+            localStorage.setItem("role",data.role)
         })
 
         // 연구실 바텀 시트
         const [labInfoBottomSheet, selectLab, openLabInfoBottomSheet]=createLabInfoBottomSheetComponent((id, name)=>{
             this.get(".lab-name").innerText=name;
-            this.selectedLabID = id;
         })
         this.get(".lab-info-wrapper").appendChild(labInfoBottomSheet);
         this.addEvent(".select-lab","click",openLabInfoBottomSheet);
-        selectLab(this.selectedLabID)
-
-        // 랩 선택을 눌렀을때
-        this.addEvent(".lab-list","click",(e)=>{ if(e.target.classList.contains("lab-select-button"))selectLab(e.target.dataset.id);})
 
         // 이벤트
         this.addEvent(".lab-manage","click",()=>{webPageManager.setPage("manage-lab-page")})
-        this.addEvent("#experiment-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("experiment-page")})
-        this.addEvent("#manual-button","click",()=>{if(!this.selectedLabID){showErrorModal();return;}webPageManager.setPage("manage-manual-page")})
+        this.addEvent("#experiment-button","click",()=>{if(!localStorage.getItem("selectedLabID")){showErrorModal();return;}webPageManager.setPage("experiment-page")})
+        this.addEvent("#manual-button","click",()=>{if(!localStorage.getItem("selectedLabID")){showErrorModal();return;}webPageManager.setPage("manage-manual-page")})
 
         return this.container;
     }
@@ -77,8 +71,8 @@ class MainPage extends WebPage{
                 <div class="mini-profile">
                     <img src="src/assets/images/profile_image.png" width=51px style="margin-right:10px;"/>
                     <div>
-                        <div class="role">전문 연구자</div>
-                        <div class="name">김순태</div>
+                        <div class="role"></div>
+                        <div class="name"></div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 class RestApi{
-    serverAddress="http://113.198.66.107:8080"
+    serverAddress="https://lsa.kgyuho.dev"
 
     constructor(){
     }
@@ -31,33 +31,15 @@ class RestApi{
             const res = await promise;
             status = res.status;
             if(!res.ok)throw new Error(await res.text());
-            const contentType = response.headers.get('Content-Type');
-            const data = (contentType && contentType.includes('application/json')) ? await res.json() : await res.text();
-            handler(status, data);
+            else{
+                const contentType = res.headers.get('Content-Type');
+                const data = (contentType && contentType.includes('application/json')) ? await res.json() : await res.text();
+                console.log(contentType, data);
+                handler(status, data);
+            }
+            
         }catch(e){ 
             errorHandler(status, e);
-        }
-    }
-
-    async toJson(promise, handler = () => {}, errorHandler = () => {}) {
-        try {
-            const res = await promise;
-            const status = res.status;
-            const data = res.ok ? await res.json() : await res.text();
-            handler(status, data);
-        } catch (e) {
-            errorHandler(e);
-        }
-    }
-
-    async toText(promise, handler = () => {}, errorHandler = () => {}) {
-        try {
-            const res = await promise;
-            const status = res.status;
-            const data = await res.text();
-            handler(status, data);
-        } catch (e) {
-            errorHandler(e);
         }
     }
 
@@ -70,29 +52,29 @@ class RestApi{
     setAuthToken(token){localStorage.setItem("token",token)}
     getAuthToken(){return localStorage.getItem("token")}
     removeToken(){localStorage.removeItem("token")}
-    setUserId(userId){localStorage.setItem("user_id",userId)}
-    getUserId(){return localStorage.getItem("user_id")}
-    removeUserId(){localStorage.removeItem("user_id")}
+    setUserId(userId){localStorage.setItem("userId",userId)}
+    getUserId(){return localStorage.getItem("userId")}
+    removeUserId(){localStorage.removeItem("userId")}
 
     //1 회원가입
     join({username,password,name,staffId,role,dept}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.post("/api/users/register",{username,password,role,staffId,name,dept,labs:[],labNames:[]})
-        this.toText(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //2 이메일 인증
     authEmail({email,code,username,password,name,staffId,role,dept},handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.post("/api/users/verify",{email,code,userDto:{username,password,name,staffId,role,dept,labs:[],labNames:[]}})
-        this.toText(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //3 로그인
     login({username,password}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.post("/api/users/login",{username, password})
-        this.toJson(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
     
     //로그아웃
@@ -105,43 +87,43 @@ class RestApi{
         this.checkInput(arguments[0]);
         const userId = this.getUserId();
         const promise = this.post(`/api/labs/request-membership?userId=${userId}&labId=${labId}`,{},true)
-        this.toText(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //5 연구실 멤버 삭제
     removeLabMember({userId,labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.post(`/api/labs/remove-membership?userId=${userId}&labId=${labId}`,{},true)
-        this.toText(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //6 연구실 신청한거 승인/거절
     responseJoinLabReqeust({requestId,accept}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.post(`/api/labs/respond-to-request?requestId=${requestId}&accept=${accept}`,{},true)
-        this.toText(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //7 유저의 연구실 신청 내역 조회
     getJoinRequestOfUser({}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const userId = this.getUserId();
-        const promise = this.get(`/api/labs/user/${userId}/membertship-requests`,true)
-        this.toJson(promise, handler, errorHandler)
+        const promise = this.get(`/api/labs/user/${userId}/membership-requests`,true)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //8 연구실에 소속된 멤버들 조회
     getLabMembers({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const promise = this.get(`/api/labs/${labId}/find-membership`,true)
-        this.toJson(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //9 연구실에 신청한 유저 조회
     getJoinRequestOfLab({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        const promise = this.get(`/api/labs/${labId}/membertship-request`,true)
-        this.toJson(promise, handler, errorHandler)
+        const promise = this.get(`/api/labs/${labId}/membership-request`,true)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //10 유저가 소속된 연구실 조회
@@ -149,15 +131,15 @@ class RestApi{
         this.checkInput(arguments[0]);
         const userId = this.getUserId();
         const promise = this.get(`/api/labs/user/${userId}/find-user-labs`,true)
-        this.toJson(promise, handler, errorHandler)
+        this.handleResponse(promise, handler, errorHandler)
     }
     
     //11 유저 인적사항 조회
     getUserInfo({}, handler, errorHandler){
         this.checkInput(arguments[0]);
         const userId = this.getUserId();
-        const promise = this.get(`/api/user/${userId}/find-user-info`,true)
-        this.toJson(promise, handler, errorHandler)
+        const promise = this.get(`/api/users/${userId}/find-user-info`,true)
+        this.handleResponse(promise, handler, errorHandler)
     }
 
     //12 아이디로 연구실 조회

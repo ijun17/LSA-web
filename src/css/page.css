@@ -334,6 +334,43 @@
     font-weight: bold;
 }
 
+
+#main-page .student-button{
+    display: flex;
+    justify-content: space-between;
+    width:88%;
+    height:231px;
+    margin-left:6%;
+    background-color: var(--background-color);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+#main-page .student-button>div{
+    width: 30px;
+}
+
+#main-page .student-button>div>div:nth-child(1){
+    color:#505F74;
+    font-size: 23px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+#main-page .student-button>div>div:nth-child(2){
+    color:#6B7684;
+    font-size: 16px;
+    white-space: nowrap;
+    margin-top:10px;
+}
+
+#main-page .student-button>img{
+    margin-top:16px;
+}
+
+
+
 #main-page .bottom-sheet{
     position: fixed;
     left:50%;
@@ -448,9 +485,6 @@
 #main-page .lab-list .lab-select-button-selected::before{
     content:"선택됨"
 }
-
-
-
 
 #main-page .user-info-bottom-sheet-component .user-info{
     width:100%;

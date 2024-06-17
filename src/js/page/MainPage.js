@@ -14,12 +14,15 @@ class MainPage extends WebPage{
             <div class="wrapper">
                 <div class="greeting"></div>
                 <div class="safe-greeting">오늘도 <span style="color:var(--main-color)">안전한 연구</span> 되시길 바랍니다.</div>
-                <div>${this.user1Buttons()}</div>
+                <div class="researcher-panel display-none">${this.user1Buttons()}</div>
+                <div class="student-panel display-none">${this.user2Buttons()}</div>
             </div>
         </div>
         `);
 
 
+        let userData;
+        
         //모달 컴포넌트
         const modalComponentWrapper = this.get(".modal-component-wrapper");
         const [modal, openModal, closeModal] = modalComponent();
@@ -43,6 +46,9 @@ class MainPage extends WebPage{
             this.get(".top-bar .name").innerText = data.name;
             this.get(".top-bar .role").innerText = data.role;
             localStorage.setItem("role",data.role)
+
+            if(data.role == "전문연구자")this.get(".researcher-panel").classList.remove("display-none")
+            else this.get(".student-panel").classList.remove("display-none")
         })
 
         // 연구실 바텀 시트
@@ -57,6 +63,7 @@ class MainPage extends WebPage{
         this.addEvent("#experiment-button","click",()=>{if(!localStorage.getItem("selectedLabID")){showErrorModal();return;}webPageManager.setPage("experiment-page")})
         this.addEvent("#manual-button","click",()=>{if(!localStorage.getItem("selectedLabID")){showErrorModal();return;}webPageManager.setPage("manage-manual-page")})
 
+        this.addEvent(".student-button", "click", ()=>{if(!localStorage.getItem("selectedLabID")){showErrorModal();return;}webPageManager.setPage("experiment-page")})
         return this.container;
     }
     // 상단바
@@ -95,6 +102,18 @@ class MainPage extends WebPage{
             <div class="main-button-wrapper">
                 <button id="experiment-button"><img src="src/assets/images/4.png" width=116px/><div>실습하기</div></button>
                 <button id="manual-button"><img src="src/assets/images/5.png" width=116px/><div>메뉴얼 설정</div></button>
+            </div>
+        `
+    }
+
+    user2Buttons(){
+        return `
+            <div class="student-button">
+                <div>
+                    <div>실습하기</div>
+                    <div>연구에 도움을 받아보세요</div>
+                </div>
+                <img src="src/assets/images/4.png" width=170px height=170px/>
             </div>
         `
     }

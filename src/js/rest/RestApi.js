@@ -2,6 +2,11 @@ class RestApi{
     serverAddress="https://lsa.kgyuho.dev"
 
     constructor(){
+        let token = localStorage.getItem("token")
+        if(token=="null" || token==undefined){
+            this.removeToken()
+            this.removeUserId()
+        }
     }
 
     post(dir, body, auth = false) {
@@ -21,6 +26,16 @@ class RestApi{
 
         return fetch(this.serverAddress + dir, {
             method: 'GET',
+            headers,
+        });
+    }
+
+    delete(dir, auth = false) {
+        const headers = {};
+        if (auth) headers['Authorization'] = `Bearer ${this.getAuthToken()}`;
+
+        return fetch(this.serverAddress + dir, {
+            method: 'DELETE',
             headers,
         });
     }
@@ -79,7 +94,8 @@ class RestApi{
     
     //로그아웃
     logout(){
-        this.setAuthToken(null)
+        this.removeToken()
+        this.removeUserId()
     }
 
     //4 연구실 가입 신청
@@ -93,7 +109,7 @@ class RestApi{
     //5 연구실 멤버 삭제
     removeLabMember({userId,labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        const promise = this.post(`/api/labs/remove-membership?userId=${userId}&labId=${labId}`,{},true)
+        const promise = this.delete(`/api/labs/remove-membership?userId=${userId}&labId=${labId}`,true)
         this.handleResponse(promise, handler, errorHandler)
     }
 
@@ -122,7 +138,7 @@ class RestApi{
     //9 연구실에 신청한 유저 조회
     getJoinRequestOfLab({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        const promise = this.get(`/api/labs/${labId}/membership-request`,true)
+        const promise = this.get(`/api/labs/${labId}/membership-requests`,true)
         this.handleResponse(promise, handler, errorHandler)
     }
 
@@ -151,49 +167,49 @@ class RestApi{
     //13 연구조회
     getResearch({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.get(`/api/labs/${labId}/find-research`,true), handler, errorHandler)
+        this.handleResponse(this.get(`/api/research/${labId}/find-research`,true), handler, errorHandler)
     }
 
     //14 연구생성
     createResearch({labId,researchName}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/create-research`,{researchName},true), handler, errorHandler)
+        this.handleResponse(this.post(`/api/research/${labId}/create-research`,{researchName},true), handler, errorHandler)
     }
 
     //15 연구수정
     editResearch({labId,researchId,researchName}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/edit-research?researchId=${researchId}`,{researchName},true), handler, errorHandler)
+        this.handleResponse(this.post(`/api/research/${labId}/edit-research?researchId=${researchId}`,{researchName},true), handler, errorHandler)
     }
 
     //16 연구삭제
     removeResearch({labId,researchId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/delete-research?researchId=${researchId}`,{},true), handler, errorHandler)
+        this.handleResponse(this.delete(`/api/research/${labId}/delete-research?researchId=${researchId}`,true), handler, errorHandler)
     }
 
 
     //17 매뉴얼조회
-    getManual({labId,researchId}, handler, errorHandler){
+    getManual({researchId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.get(`/api/labs/${labId}/find-manual?researchId=${researchId}`,true), handler, errorHandler)
+        this.handleResponse(this.get(`/api/research/manual/find-manual?researchId=${researchId}`,true), handler, errorHandler)
     }
 
     //18 매뉴얼생성
     createManual({labId,researchId,manualName}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/create-manual?researchId=${researchId}`,{manualName},true), handler, errorHandler)
+        this.handleResponse(this.post(`/api/research/manual/${labId}/create-manual?researchId=${researchId}`,{manualName},true), handler, errorHandler)
     }
 
     //19 매뉴얼수정
-    editManual({labId,manualId,researchName}, handler, errorHandler){
+    editManual({manualId,manualName}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/edit-manual?manualId=${manualId}`,{researchName},true), handler, errorHandler)
+        this.handleResponse(this.post(`/api/research/manual/edit-manual?manualId=${manualId}`,{manualName},true), handler, errorHandler)
     }
 
     //20 매뉴얼삭제
-    removeManual({labId,manualId}, handler, errorHandler){
+    removeManual({manualId}, handler, errorHandler){
         this.checkInput(arguments[0]);
-        this.handleResponse(this.post(`/api/labs/${labId}/delete-manual?manualId=${manualId}`,{},true), handler, errorHandler)
+        this.handleResponse(this.delete(`/api/research/manual/delete-manual?manualId=${manualId}`,true), handler, errorHandler)
     }
 }

@@ -7,6 +7,7 @@ class JoinPage extends WebPage{
     }
     init(manager){
         this.setInnerHTML(`
+        <div class="modal-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
                 <button class="back-button"><image src="src/assets/images/back.png" width=25px></button>
@@ -43,9 +44,9 @@ class JoinPage extends WebPage{
                 </div>
                 <p class="warning-text hidden" id="warnPw">⚠️  비밀번호가 일치하지 않습니다.</p>
 
-                <div class="text-center" style="position:relative;">
-                    <input type="email" class="main-input" placeholder="인증번호" required>
-                    <button class="email-auth-button" id="cert-send-button">재전송</button>
+                <div class="text-center display-none" style="position:relative;" id="auth-input">
+                    <input type="number" class="main-input" placeholder="인증번호" id="cert-send-input" required>
+                    <button class="email-auth-button" id="cert-send-button">인증</button>
                 </div>
                 <p class="warning-text hidden" id="cert-warning-text">⚠️  인증번호가 틀렸습니다. 다시 시도해주세요.</p>
 
@@ -59,27 +60,45 @@ class JoinPage extends WebPage{
 
         const trueButton = this.get("#true-button")
         const falseButton = this.get("#false-button")
-        const nameInput = this.get("#info1")
         const info51 = this.get("#info51")
         const info52 = this.get("#info52")
+
+        const [modal, openModal, closeModal] = modalComponent();
+        this.get(".modal-wrapper").appendChild(modal)
 
         // const infoID=["#info1","#info2","#info3","#info4"]
         let data=["","","","","","",""]
         let empty=true;
+        let samePW=true; // 비밀번호와 비밀번호 확인 똑같은지
+        let auth=false;
+
         let checkEmpty=()=>{
-            let flag=false;
-            for(let d of data)if(d=="")flag=true;
-            if(empty!=flag){
-                this.get("#true-button").classList.toggle("display-none")
-                this.get("#false-button").classList.toggle("display-none")
-                empty=flag;
+            empty=false;
+            for(let d of data)if(d=="")empty=true;
+            if(!samePW)empty=true;
+            if(empty){
+                this.get("#true-button").classList.add("display-none")
+                this.get("#false-button").classList.remove("display-none")
+            }else{
+                this.get("#true-button").classList.remove("display-none")
+                this.get("#false-button").classList.add("display-none")
             }
         }
 
-        this.addEvent("#info51","click",()=>{data[4]="1";info52.classList.remove("border");info51.classList.add("border");})
-        this.addEvent("#info52","click",()=>{data[4]="2";info51.classList.remove("border");info52.classList.add("border");})
-        this.addEvent("#info51","click",checkEmpty)
-        this.addEvent("#info52","click",checkEmpty)
+        this.addEvent("#info51","click",()=>{
+            if(auth)return
+            data[4]="RESEARCHER";
+            info52.classList.remove("border");
+            info51.classList.add("border");
+            checkEmpty();
+        })
+        this.addEvent("#info52","click",()=>{
+            if(auth)return
+            data[4]="STUDENT";
+            info51.classList.remove("border");
+            info52.classList.add("border");
+            checkEmpty();
+        })
 
         for(let i=0; i<4; i++){
             this.addEvent("#info"+(i+1),"input",()=>{
@@ -88,32 +107,60 @@ class JoinPage extends WebPage{
             })
         }
 
-        this.addEvent("#true-button", "click", ()=>{
-            manager.setPage("info-complete-page", {name:this.get("#info1").value})
+        this.addEvent("#email", "input", ()=>{
+            data[5] = this.get("#email").value;
         })
-
-        let enableEmail=false; //이메일 인증 되었는지
-        let samePW=true; // 비밀번호와 비밀번호 확인 똑같은지
 
         // 비밀번호 비교
         let ckeckPasswordSame=()=>{
             const pw1 = this.get("#pw1").value;
             const pw2 = this.get("#pw2").value;
+            data[6]=pw1
             if(samePW!=(pw1==pw2))this.get("#warnPw").classList.toggle("hidden")
             samePW=(pw1==pw2)
         }
-        let checkEmail
 
-        this.addEvent("#pw1","input",ckeckPasswordSame)
-        this.addEvent("#pw2","input",ckeckPasswordSame)
+        this.addEvent("#pw1","input",()=>{ckeckPasswordSame(); checkEmpty()})
+        this.addEvent("#pw2","input",()=>{ckeckPasswordSame(); checkEmpty()})
 
-        this.addEvent(".back-button","click",()=>{
-            manager.setPage("login-page")
+        this.addEvent("#true-button", "click", ()=>{
+            const username = data[5];
+            const password = data[6];
+            const name = data[0];
+            const dept = data[2];
+            const staffId = data[3];
+            const role = data[4];
+            REST.join({username, password, name, staffId, role, dept},(status,data)=>{
+                auth=true;
+                for(let i=0; i<4; i++)this.get("#info"+(i+1)).readOnly=true;
+                this.get("#email").readOnly = true;
+                this.get("#pw1").readOnly = true;
+                this.get("#pw2").readOnly = true;
+                trueButton.classList.add("display-none")
+                this.get("#auth-input").classList.remove("display-none");
+                openModal(`<p>이메일로 전송된 인증 번호를 입력해주세요</p>`, ["확인"], [closeModal])
+            },(status, data)=>{
+                openModal(`<h1>오류</h1><p>입력한 정보를 다시 확인해주세요.</p><p>${data}</p>`, ["확인"], [closeModal])
+            })
         })
 
-        this.addEvent(".main-button","click",()=>{
-            manager.setPage("join-complete-page")
+        this.addEvent("#cert-send-button", "click", ()=>{
+            const email = data[5];
+            const code = Number(this.get("#cert-send-input").value);
+            const username = data[5];
+            const password = data[6];
+            const name = data[0];
+            const dept = data[2];
+            const staffId = data[3];
+            const role = data[4];
+            REST.authEmail({email,code,username,password,name,staffId,role,dept},(status, data)=>{
+                manager.setPage("join-complete-page")
+            }, (status, data)=>{
+                openModal(`<h1>오류</h1><p>인증에 실패했습니다.</p><p>${data}</p>`, ["확인"], [closeModal])
+            })
         })
+
+        this.addEvent(".back-button","click",()=>{manager.setPage("login-page")})
         return this.container;
     }
 

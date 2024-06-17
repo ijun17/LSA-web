@@ -3,6 +3,7 @@ class TestRestApi{
         {email:"1234",password:"1234",name:"김준기",major:"소프트웨어공학과",duty:1,id:"201911067",}
     ]
     token = 6;
+    userId = 6
     userDb=[
         {userId:1,name:"김준기",dept:"소프트웨어공학과",role:"RESEARCHER",staffId:"12345",username:"1",password:"1",token:1},
         {userId:2,name:"김규호",dept:"소프트웨어공학과",role:"STUDENT",staffId:"12445",username:"2",password:"2",token:2},
@@ -42,9 +43,6 @@ class TestRestApi{
     
 
     constructor(){
-        console.log("REST:TEST")
-        console.log("김준기 id:1 / pw:1")
-        console.log("김규호 id:2 / pw:2")
     }
 
     checkInput(input){
@@ -66,13 +64,11 @@ class TestRestApi{
         this.checkInput(arguments[0]);
         for(let user of this.userDb){
             if(user.username == username){
-                errorHandler(409, "Conflict")
-                console.log("회원가입 실패: 동일한 아이디가 있습니다.")
+                errorHandler(409, "회원가입 실패: 동일한 아이디가 있습니다.")
                 return;
             }
         }
         handler(200,"sucess")
-        console.log("이메일 인증 코드: 0")
     }
 
     //완료 6.12
@@ -80,12 +76,12 @@ class TestRestApi{
     authEmail({email,code,username,password,name,staffId,role,dept},handler, errorHandler){
         this.checkInput(arguments[0]);
         if(code=="0"){
+            const userId = this.userId++;
             this.userDb.push({userId,name,dept,role,staffId,username,password,token:this.token++})
             handler(200,"sucess")
             return
         }
-        errorHandler(400,"fail")
-        console.log("이메일 인증 코드: 0")
+        errorHandler(400,"이메일 인증 코드: 0")
     }
 
     //완료 6.12
@@ -240,41 +236,99 @@ class TestRestApi{
     //13 연구조회
     getResearch({labId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const result = []
+        for(let research of this.researchDb){
+            if(research.labId == labId){
+                const researchId = research.researchId, researchName = research.researchName;
+                result.push({labId, researchId, researchName});
+            }
+        }
+        handler(200, result);
     }
 
     //14 연구생성
     createResearch({labId,researchName}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        if(this.labDb.find(e=>e.labId == labId)){
+            const researchId = this.researchId++;
+            this.researchDb.push({labId, researchName, researchId})
+            handler(200, {researchId})
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 
     //15 연구수정
     editResearch({labId,researchId,researchName}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const research = this.researchDb.find(e=>e.researchId == researchId);
+        if(research){
+            research.researchName = researchName;
+            handler(200, "sucess")
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 
     //16 연구삭제
     removeResearch({labId,researchId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const researchIndex = this.researchDb.findIndex(e=>e.researchId == researchId);
+        if(researchIndex>=0){
+            this.researchDb.splice(researchIndex,1)
+            handler(200, "sucess")
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 
 
     //17 매뉴얼조회
-    getManual({labId,researchId}, handler, errorHandler){
+    getManual({researchId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const result = []
+        for(let manual of this.manualDb){
+            if(manual.researchId == researchId){
+                const manualId = manual.manualId, manualName = manual.manualName;
+                result.push({manualId, researchId, manualName});
+            }
+        }
+        handler(200, result);
     }
 
     //18 매뉴얼생성
     createManual({labId,researchId,manualName}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        if(this.labDb.find(e=>e.labId == labId) && this.researchDb.find(e=>e.researchId == researchId)){
+            const manualId = this.manualId++;
+            this.manualDb.push({researchId, manualName, manualId})
+            handler(200, {manualId})
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 
     //19 매뉴얼수정
-    editManual({labId,manualId,researchName}, handler, errorHandler){
+    editManual({manualId,manualName}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const manual = this.manualDb.find(e=>e.manualId == manualId);
+        if(manual){
+            manual.manualName = manualName;
+            handler(200, "sucess")
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 
     //20 매뉴얼삭제
-    removeManual({labId,manualId}, handler, errorHandler){
+    removeManual({manualId}, handler, errorHandler){
         this.checkInput(arguments[0]);
+        const manualIndex = this.manualDb.findIndex(e=>e.manualId == manualId);
+        if(manualIndex>=0){
+            this.manualDb.splice(manualIndex,1)
+            handler(200, "sucess")
+        }else{
+            errorHandler(400, "fail")
+        }
     }
 }

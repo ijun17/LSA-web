@@ -51,6 +51,8 @@ function createUserInfoBottomSheetComponent(){
     logoutButton.addEventListener("click",()=>{
         webPageManager.setPage("login-page")
         REST.logout()
+        localStorage.removeItem("selectedLabID")
+        localStorage.removeItem("role")
     })
 
 

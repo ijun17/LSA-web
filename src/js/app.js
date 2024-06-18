@@ -1,6 +1,6 @@
 const root = document.getElementById("root")
 const webPageManager = new WebPageManager(root)
-const REST = new RestApi();
+const REST = new TestRestApi();
 
 let isMobileFlagToFetchUniwebview=false;
 

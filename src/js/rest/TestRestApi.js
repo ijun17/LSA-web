@@ -1,7 +1,4 @@
 class TestRestApi{
-    oasisdb=[
-        {email:"1234",password:"1234",name:"김준기",major:"소프트웨어공학과",duty:1,id:"201911067",}
-    ]
     token = 6;
     userId = 6
     userDb=[
@@ -46,9 +43,11 @@ class TestRestApi{
     }
 
     checkInput(input){
+        const emptyArguments = [];
         for(const key in input){
-            if(input[key]===undefined)console.error("REST: undefined input error: "+key)
+            if(input[key]===undefined)emptyArguments.push(key)
         }
+        if(emptyArguments.length>0)console.error("REST: undefined input error: "+emptyArguments)
     }
 
     setAuthToken(token){this.currentToken=token}
@@ -61,7 +60,7 @@ class TestRestApi{
     //완료 6.12
     //1 회원가입
     join({username,password,name,staffId,role,dept}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({username,password,name,staffId,role,dept});
         for(let user of this.userDb){
             if(user.username == username){
                 errorHandler(409, "회원가입 실패: 동일한 아이디가 있습니다.")
@@ -74,7 +73,7 @@ class TestRestApi{
     //완료 6.12
     //2 이메일 인증
     authEmail({email,code,username,password,name,staffId,role,dept},handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({email,code,username,password,name,staffId,role,dept});
         if(code=="0"){
             const userId = this.userId++;
             this.userDb.push({userId,name,dept,role,staffId,username,password,token:this.token++})
@@ -87,7 +86,7 @@ class TestRestApi{
     //완료 6.12
     //3 로그인 {userId:user.userId, token:user.token}
     login({username,password}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({username,password});
         for(let user of this.userDb){
             if(user.username==username && user.password == password){
                 handler(200, {userId:user.userId, token:user.token})
@@ -107,7 +106,7 @@ class TestRestApi{
     //완료 6.12
     //4 연구실 가입 신청 
     requestJoinLab({labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId});
         const userId = this.getUserId();
         const lab = this.labDb.find(e=>e.labId == labId)
         if(lab.member.indexOf(userId)<0){
@@ -117,13 +116,12 @@ class TestRestApi{
         }else{
             errorHandler(400,"fail")
         }
-        
     }
 
     //완료 6.12
     //5 연구실 멤버 삭제
     removeLabMember({userId,labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({userId,labId});
         const lab = this.labDb.find(e=>e.labId == labId)
         if(lab){
             const ui = lab.member.indexOf(userId)
@@ -136,7 +134,7 @@ class TestRestApi{
     //완료 6.12
     //6 연구실 신청한거 승인/거절
     responseJoinLabReqeust({requestId,accept}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({requestId,accept});
         const ri = this.requestDb.findIndex(e=>requestId == e.requestId)
         const req = this.requestDb[ri]
         const lab = this.labDb.find(e=>e.labId == req.labId)
@@ -148,7 +146,6 @@ class TestRestApi{
     //완료 6.12
     //7 유저의 연구실 신청 내역 조회 [ {name, staffId, role, dept, labId, labName, requestId} ]
     getJoinRequestOfUser({}, handler, errorHandler){
-        this.checkInput(arguments[0]);
         const userId = this.getUserId();
         let result = []
         let user = this.userDb.find(ele=>{return ele.userId = userId})
@@ -169,7 +166,7 @@ class TestRestApi{
 
     //8 연구실에 소속된 멤버들 조회
     getLabMembers({labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId});
         let result = []
         const lab = this.labDb.find(e=>labId == e.labId)
         for(let ui of lab.member){
@@ -182,7 +179,7 @@ class TestRestApi{
 
     //9 연구실에 신청한 유저 조회
     getJoinRequestOfLab({labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId});
         let result = []
         for(let req of this.requestDb){
             if(req.labId == labId){
@@ -196,7 +193,7 @@ class TestRestApi{
 
     //10 유저가 소속된 연구실 조회 [{labId, labName, dept}]
     getLabsOfUser({}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        // this.checkInput(arguments[0]);
         
         const userId = this.getUserId();
         const result=[]
@@ -212,7 +209,7 @@ class TestRestApi{
     // 완료 6.12
     //11 유저 인적사항 조회
     getUserInfo({}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        // this.checkInput(arguments[0]);
         const userId = this.getUserId();
         const user = this.userDb.find(ele=>ele.userId==userId)
         if(user){
@@ -223,7 +220,7 @@ class TestRestApi{
 
     //12 아이디로 연구실 조회
     getLabInfo({labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId});
         const lab = this.labDb.find(e=>e.labId == labId);
         if(lab){
             const labName = lab.labName, dept=lab.dept
@@ -235,7 +232,7 @@ class TestRestApi{
 
     //13 연구조회
     getResearch({labId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId});
         const result = []
         for(let research of this.researchDb){
             if(research.labId == labId){
@@ -248,7 +245,7 @@ class TestRestApi{
 
     //14 연구생성
     createResearch({labId,researchName}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId,researchName});
         if(this.labDb.find(e=>e.labId == labId)){
             const researchId = this.researchId++;
             this.researchDb.push({labId, researchName, researchId})
@@ -260,7 +257,7 @@ class TestRestApi{
 
     //15 연구수정
     editResearch({labId,researchId,researchName}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId,researchId,researchName});
         const research = this.researchDb.find(e=>e.researchId == researchId);
         if(research){
             research.researchName = researchName;
@@ -272,7 +269,7 @@ class TestRestApi{
 
     //16 연구삭제
     removeResearch({labId,researchId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId,researchId});
         const researchIndex = this.researchDb.findIndex(e=>e.researchId == researchId);
         if(researchIndex>=0){
             this.researchDb.splice(researchIndex,1)
@@ -285,7 +282,7 @@ class TestRestApi{
 
     //17 매뉴얼조회
     getManual({researchId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({researchId});
         const result = []
         for(let manual of this.manualDb){
             if(manual.researchId == researchId){
@@ -298,7 +295,7 @@ class TestRestApi{
 
     //18 매뉴얼생성
     createManual({labId,researchId,manualName}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({labId,researchId,manualName});
         if(this.labDb.find(e=>e.labId == labId) && this.researchDb.find(e=>e.researchId == researchId)){
             const manualId = this.manualId++;
             this.manualDb.push({researchId, manualName, manualId})
@@ -310,7 +307,7 @@ class TestRestApi{
 
     //19 매뉴얼수정
     editManual({manualId,manualName}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({manualId,manualName});
         const manual = this.manualDb.find(e=>e.manualId == manualId);
         if(manual){
             manual.manualName = manualName;
@@ -322,7 +319,7 @@ class TestRestApi{
 
     //20 매뉴얼삭제
     removeManual({manualId}, handler, errorHandler){
-        this.checkInput(arguments[0]);
+        this.checkInput({manualId});
         const manualIndex = this.manualDb.findIndex(e=>e.manualId == manualId);
         if(manualIndex>=0){
             this.manualDb.splice(manualIndex,1)

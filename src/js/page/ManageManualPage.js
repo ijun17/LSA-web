@@ -56,7 +56,7 @@ class ManageManualPage extends WebPage{
         }
 
         this.addEvent("#next-button","click",()=>{
-            if(isApp())window.location.href = "uniwebview://onAREditmanual?id=1"
+            if(isApp())window.location.href = `uniwebview://onAREditmanual?token=${REST.getToken()}&manualId=${selectedManualId}`
             else openModal(`<p>AR환경을 실행하기 위해서는<br>앱을 다운받아 주세요</p>`,["확인"],[()=>{closeModal()}])
         })
 

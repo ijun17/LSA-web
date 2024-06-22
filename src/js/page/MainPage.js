@@ -49,6 +49,13 @@ class MainPage extends WebPage{
 
             if(data.role == "전문연구자")this.get(".researcher-panel").classList.remove("display-none")
             else this.get(".student-panel").classList.remove("display-none")
+        },(status, data)=>{
+            if(status===401){
+                webPageManager.setPage("login-page")
+                REST.logout()
+                localStorage.removeItem("selectedLabID")
+                localStorage.removeItem("role")
+            }
         })
 
         // 연구실 바텀 시트

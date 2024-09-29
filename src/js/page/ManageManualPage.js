@@ -3,11 +3,12 @@ class ManageManualPage extends WebPage{
         super()
     }
     init(manager){
-        this.setInnerHTML(`
+        this.setInnerHTML(/* html */`
         <div id="topbar-component-wrapper"></div>
         <div class="modal-component-wrapper"></div>
         <div class="flex-center">
             <div class="wrapper">
+                <div id='manual-search-wrapper' class='flex-center'></div>
                 <div id="research-selection-button-list"></div>
                 <div id="manual-selection-button-list"></div>
                 <div id="manual-panel" class="display-none">
@@ -20,16 +21,21 @@ class ManageManualPage extends WebPage{
         let selectedResearchId;
         let selectedManualId;
 
-        const tobbarComponentWrapper = this.get("#topbar-component-wrapper")
-        const modalComponentWrapper = this.get(".modal-component-wrapper")
-        const researchDropdownWrapper = this.get("#research-selection-button-list")
-        const manualDrobdownWrapper = this.get("#manual-selection-button-list")
-        const manualPanel = this.get("#manual-panel")
+        const manualSearchWrapper = this.get('#manual-search-wrapper');
+        const tobbarComponentWrapper = this.get("#topbar-component-wrapper");
+        const modalComponentWrapper = this.get(".modal-component-wrapper");
+        const researchDropdownWrapper = this.get("#research-selection-button-list");
+        const manualDrobdownWrapper = this.get("#manual-selection-button-list");
+        const manualPanel = this.get("#manual-panel");
 
-        tobbarComponentWrapper.appendChild(topbarComponent("매뉴얼 설정", "main-page"))
+        const topbar = topbarComponent("매뉴얼 설정/검색", "main-page");
+        tobbarComponentWrapper.appendChild(topbar);
 
         const [modal, openModal, closeModal] = modalComponent();
         modalComponentWrapper.appendChild(modal);
+
+        const manualSearch = manualSearchComponent();
+        manualSearchWrapper.appendChild(manualSearch);
 
         //연구 선택 컴포넌트
         const labId = localStorage.getItem("selectedLabID")

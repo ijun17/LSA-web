@@ -328,4 +328,33 @@ class TestRestApi{
             errorHandler(400, "fail")
         }
     }
+
+    //30 매뉴얼 공유
+    shareManaul({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        handler(200);
+    }
+
+    //31 매뉴얼 공유 취소
+    cancleShareManaul({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        handler(200);
+    }
+
+    //32 매뉴얼 검색    
+    searchManual({name}, handler, errorHandler){
+        this.checkInput({name});
+        handler(200,[
+            {manualId:1, manualName:'안전 제일', downloads:13},
+            {manualId:3, manualName:'산불 조심', downloads:7},
+            {manualId:5, manualName:'과유 불급', downloads:2},
+            {manualId:7, manualName:'사필 귀정', downloads:1},
+        ])
+    }
+
+    //33 다른 연구실 매뉴얼 가져오기
+    bringSharedManual({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        this.handleResponse(this.post(`/api/portal/sharemanual/load`, {manualId}, true), handler, errorHandler);
+    }
 }

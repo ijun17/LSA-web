@@ -19,9 +19,6 @@ class MainPage extends WebPage{
             </div>
         </div>
         `);
-
-
-        let userData;
         
         //모달 컴포넌트
         const modalComponentWrapper = this.get(".modal-component-wrapper");
@@ -95,7 +92,7 @@ class MainPage extends WebPage{
 
     // 전문 연구자 버튼 - 연구실 관리, 실습하기, 메뉴얼 설정
     user1Buttons(){
-        return `
+        return /*html*/`
             <div class="lab-manage space-between">
                 <div>
                     <img src="src/assets/images/lab_icon.png" width=90px/>
@@ -108,11 +105,12 @@ class MainPage extends WebPage{
             </div>
             <div class="main-button-wrapper">
                 <button id="experiment-button"><img src="src/assets/images/4.png" width=116px/><div>실습하기</div></button>
-                <button id="manual-button"><img src="src/assets/images/5.png" width=116px/><div>메뉴얼 설정</div></button>
+                <button id="manual-button"><img src="src/assets/images/5.png" width=116px/><div>메뉴얼 설정/검색</div></button>
             </div>
         `
     }
 
+    // 실습자 버튼
     user2Buttons(){
         return `
             <div class="student-button">

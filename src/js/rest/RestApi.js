@@ -197,4 +197,31 @@ class RestApi{
         this.checkInput({manualId});
         this.handleResponse(this.delete(`/api/research/manual/delete-manual?manualId=${manualId}`,true), handler, errorHandler)
     }
+
+    //30 매뉴얼 공유
+    shareManaul({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        this.handleResponse(this.post(`/api/portal/sharemanual`, {manualId},true), handler, errorHandler);
+    }
+
+    //31 매뉴얼 공유 취소
+    cancleShareManaul({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        this.handleResponse(this.delete(`/api/portal/sharemanual/${manualId}`, true), handler, errorHandler);
+    }
+
+    //32 매뉴얼 검색    
+    searchManual({name}, handler, errorHandler){
+        this.checkInput({name});
+        this.handleResponse(this.get(`/api/portal/sharemanual?name=${name}`), handler, errorHandler);
+    }
+
+    //33 다른 연구실 매뉴얼 가져오기
+    bringSharedManual({manualId}, handler, errorHandler){
+        this.checkInput({manualId});
+        this.handleResponse(this.post(`/api/portal/sharemanual/load`, {manualId}, true), handler, errorHandler);
+    }
+
+    //34 가져온 공유 매뉴얼 조회
+    // getBringedSharedManual({})
 }

@@ -54,6 +54,7 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
             <button class="edit-comp-button display-none">완료</button>
             <button class="edit-button">수정</button>
             <button class="delete-button">삭제</button>
+            <button class="share-button">공유</button>
         <div>`
         button.className = optionClassName;
 

@@ -10,9 +10,7 @@ function dropdownResearchComponent(labId, canEdit, labSelectHandler){
 
 
     const addResearchOption = (data)=>{
-        addOption(data.researchId, data.researchName, "", (data)=>{
-            labSelectHandler(data)
-        },({id,name}, handler, errorHandler)=>{
+        const onclickedit = ({id,name}, handler, errorHandler)=>{
             const researchId = id, researchName = name;
             REST.editResearch({labId,researchId, researchName},(status, data)=>{
                 handler()
@@ -20,7 +18,9 @@ function dropdownResearchComponent(labId, canEdit, labSelectHandler){
                 showModal(`<h1>오류</h1><p>연구 수정을 실패했습니다.</p><p>${data}</p>`,["확인"],[closeModal])
                 errorHandler()
             })
-        },({id}, handler, errorHandler)=>{
+        }
+
+        const onclickdelete = ({id}, handler, errorHandler)=>{
             showModal(`<p>이 연구를 삭제하겠습니까?</p>`,["삭제","취소"],[()=>{
                 closeModal();
                 REST.removeResearch({labId, researchId:id},(status,data)=>{
@@ -30,7 +30,15 @@ function dropdownResearchComponent(labId, canEdit, labSelectHandler){
                     errorHandler()
                 })
             },closeModal])
-        })
+        }
+
+        let handlerOption = {};
+
+        if(data.researchId && canEdit){
+            handlerOption = {onclickedit, onclickdelete}
+        }
+
+        return addOption(data.researchId, data.researchName, "", (data)=>labSelectHandler(data), handlerOption)
     }
 
     div.querySelector(".add-button").addEventListener("click",()=>{
@@ -47,6 +55,7 @@ function dropdownResearchComponent(labId, canEdit, labSelectHandler){
     })
     
     REST.getResearch({labId}, (status, data)=>{
+        addResearchOption({researchId:null, researchName:"공유받은 매뉴얼"});
         for(let research of data){
             addResearchOption(research);
         }

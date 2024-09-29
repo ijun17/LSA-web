@@ -49,7 +49,7 @@ class ManageManualPage extends WebPage{
             selectedResearchId = researchId
             manualPanel.classList.add("display-none")
             //매뉴얼 선택 컴포넌트
-            const [manualDropdown] = dropdownManualComponent(labId, researchId, true, (data)=>{
+            const [manualDropdown] = dropdownManualComponent(labId, researchId, researchId!==null, (data)=>{
                 selectManual();
             })
             manualDrobdownWrapper.innerHTML=""

@@ -10,9 +10,7 @@ function dropdownManualComponent(labId, researchId, canEdit, manualSelectHandler
 
 
     const addManualOption = (data)=>{
-        addOption(data.manualId, data.manualName, "", (data)=>{
-            manualSelectHandler(data)
-        },({id,name}, handler, errorHandler)=>{
+        const onclickedit = ({id,name}, handler, errorHandler)=>{
             const manualId = id, manualName = name;
             REST.editManual({manualId, manualName},(status, data)=>{
                 handler()
@@ -20,7 +18,9 @@ function dropdownManualComponent(labId, researchId, canEdit, manualSelectHandler
                 showModal(`<h1>오류</h1><p>매뉴얼 수정을 실패했습니다.</p><p>${data}</p>`,["확인"],[closeModal])
                 errorHandler()
             })
-        },({id}, handler, errorHandler)=>{
+        }
+
+        const onclickdelete = ({id}, handler, errorHandler)=>{
             showModal(`<p>이 매뉴얼을 삭제하겠습니까?</p>`,["삭제","취소"],[()=>{
                 closeModal();
                 REST.removeManual({manualId:id},(status,data)=>{
@@ -30,7 +30,27 @@ function dropdownManualComponent(labId, researchId, canEdit, manualSelectHandler
                     errorHandler()
                 })
             },closeModal])
-        })
+        }
+
+        const onclickshare = ({id}, handler, errorHandler)=>{
+            showModal(`<p>이 매뉴얼을 공유하겠습니까?</p>`,["공유","취소"],[()=>{
+                closeModal();
+                REST.shareManaul({manualId:id},(status,data)=>{
+                    handler()//매뉴얼 공유 성공
+                },(status,data)=>{
+                    showModal(`<h1>오류</h1><p>매뉴얼 공유를 실패했습니다.</p><p>${data}</p>`,["확인"],[closeModal])
+                    errorHandler()
+                })
+            },closeModal])
+        }
+
+        let handlerOption = {};
+
+        if(canEdit){
+            handlerOption = {onclickedit, onclickdelete, onclickshare};
+        }
+
+        addOption(data.manualId, data.manualName, "", (data)=>manualSelectHandler(data), handlerOption)
     }
 
     div.querySelector(".add-button").addEventListener("click",()=>{
@@ -45,14 +65,26 @@ function dropdownManualComponent(labId, researchId, canEdit, manualSelectHandler
             })
         },closeModal])
     })
+
+    if(researchId){
+        REST.getManual({researchId}, (status, data)=>{
+            for(let manual of data){
+                addManualOption(manual);
+            }
+        },(status, data)=>{
+            
+        })
+    }else{
+        REST.getBringedSharedManual({}, (status, data)=>{
+            for(let manual of data){
+                addManualOption(manual);
+            }
+        },(status, data)=>{
+            
+        })
+    }
     
-    REST.getManual({researchId}, (status, data)=>{
-        for(let manual of data){
-            addManualOption(manual);
-        }
-    },(status, data)=>{
-        
-    })
+    
 
 
     return [div]

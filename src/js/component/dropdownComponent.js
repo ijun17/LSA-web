@@ -45,16 +45,16 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
     accordionButton.addEventListener("click",clickAccordionButton)
 
     //옵션을 추가한다.
-    const addOption = (id, name, description="", onclick=()=>{}, onclickedit=()=>{}, onclickdelete=()=>{})=>{
+    const addOption = (id, name, description="", onclick=()=>{}, {onclickedit, onclickdelete, onclickshare})=>{
         const button = document.createElement("div");
         button.innerHTML = `
         <div class="button-name">${name}</div>
         <input type="text" class="display-none">
         <div ${!canEdit ? `class="display-none"` : ""}>
             <button class="edit-comp-button display-none">완료</button>
-            <button class="edit-button">수정</button>
-            <button class="delete-button">삭제</button>
-            <button class="share-button">공유</button>
+            <button class="edit-button ${!onclickedit ? "display-none" : ""}">수정</button>
+            <button class="delete-button ${!onclickdelete ? "display-none" : ""}">삭제</button>
+            <button class="share-button ${!onclickshare ? "display-none" : ""}">공유</button>
         <div>`
         button.className = optionClassName;
 
@@ -107,6 +107,8 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
         })
 
         buttonList.appendChild(button);
+
+        return button;
     }
 
 

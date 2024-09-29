@@ -223,5 +223,7 @@ class RestApi{
     }
 
     //34 가져온 공유 매뉴얼 조회
-    // getBringedSharedManual({})
+    getBringedSharedManual({}, handler, errorHandler){
+        this.handleResponse(this.get(`/api/portal/sharemanual/all`, true), handler, errorHandler);
+    }
 }

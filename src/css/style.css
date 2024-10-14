@@ -8,7 +8,7 @@
 }
 
 *{
-    font-family: "AppleSDGothicNeo", Arial;
+    font-family: "Pretendard Variable", Arial;
     margin:0;
     padding: 0;
     box-sizing:border-box;
@@ -45,23 +45,4 @@ input::placeholder {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-
-@font-face {
-    font-family: "AppleSDGothicNeo";
-    font-weight: 500;
-    src: url(../assets/fonts/AppleSDGothicNeoM.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: "AppleSDGothicNeo";
-    font-weight: 600;
-    src: url(../assets/fonts/AppleSDGothicNeoSB.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: "AppleSDGothicNeo";
-    font-weight: 700;
-    src: url(../assets/fonts/AppleSDGothicNeoB.ttf) format('truetype');
 }

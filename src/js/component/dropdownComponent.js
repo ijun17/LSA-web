@@ -30,13 +30,13 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
     const selectedButton = div.querySelector('.selected-option-preview>div');
     const dropdownDescription = div.querySelector(`.dropdown-description`);
     
-    let selectedOptionId = null;
+    // let selectedOptionId = null;
 
     const [modal, showModal, cloasModal] = modalComponent();
     div.appendChild(modal);
 
     const clickAccordionButton = ()=>{
-        if(selectedOptionId===null)return
+        // if(selectedOptionId===null)return
         buttonList.classList.toggle("option-list-fold");
         selectedPreview.classList.toggle("display-none");
         accordionButton.classList.toggle("accordion-button-open");
@@ -65,7 +65,7 @@ function dropdownComponent(title, description, selectDescription, canFold=true, 
         const deleteButton = button.querySelector(".delete-button")
         button.addEventListener("click",(e)=>{ //버튼을 선택
             if(!(e.target == button || e.target == buttonText))return;
-            selectedOptionId = id;
+            // selectedOptionId = id;
             selectedButton.innerText = name;
             dropdownDescription.innerHTML = selectDescription;
             clickAccordionButton()

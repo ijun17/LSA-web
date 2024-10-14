@@ -345,10 +345,10 @@ class TestRestApi{
     searchManual({name}, handler, errorHandler){
         this.checkInput({name});
         handler(200,[
-            {manualId:1, manualName:'안전 제일', downloads:13},
-            {manualId:3, manualName:'산불 조심', downloads:7},
-            {manualId:5, manualName:'과유 불급', downloads:2},
-            {manualId:7, manualName:'사필 귀정', downloads:1},
+            {manualId:1, manualName:'매뉴얼 1', downloads:13},
+            {manualId:3, manualName:'매뉴얼 2', downloads:7},
+            {manualId:5, manualName:'매뉴얼 3', downloads:2},
+            {manualId:7, manualName:'매뉴얼 4', downloads:1},
         ])
     }
 
@@ -361,10 +361,8 @@ class TestRestApi{
     //34 가져온 공유 매뉴얼 조회
     getBringedSharedManual({}, handler, errorHandler){
         handler(200,[
-            {manualId:1, manualName:'안전 제일', downloads:13},
-            {manualId:3, manualName:'산불 조심', downloads:7},
-            {manualId:5, manualName:'과유 불급', downloads:2},
-            {manualId:7, manualName:'사필 귀정', downloads:1},
+            {manualId:1, manualName:'매뉴얼 1', downloads:13},
+            {manualId:3, manualName:'매뉴얼 2', downloads:7},
         ])
     }
 }
